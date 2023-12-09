@@ -1342,7 +1342,7 @@ Este princípio nos diz duas coisas essenciais:
 1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
 2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
 
-Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularJS, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande benefício é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
+Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularSwift, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande benefício é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
 
 Como dito anteriormente, Swift não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer módulo de Request  para `InventoryTracker` terá um método `requestItems`:
 
@@ -1424,7 +1424,7 @@ inventoryTracker.requestItems()
 ------
 
 ## **Testes**
-Testes são mais importantes que entregas. Se você não possui testes ou uma quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espírito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](http://gotwarlost.github.io/istanbul/).
+Testes são mais importantes que entregas. Se você não possui testes ou uma quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espírito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](https://www.sonarsource.com/products/sonarqube/).
 
 Não existe desculpa para não escrever testes. Existem [diversos frameworks de testes em Swift ótimos](https://github.com/vsouza/awesome-ios#testing), então encontre um que seu time prefira. Quando você encontrar um que funciona para seu time, então tenha como objetivo sempre escrever testes para cada nova funcionalidade/módulo que você introduzir. Se seu método preferido for Desenvolvimento Orientado a Testes (TDD), isso é ótimo, mas o ponto principal é apenas ter certeza que você está alcançado suas metas de cobertura antes de lançar qualquer funcionalidade, ou refatorar uma já existente.
 
@@ -1434,18 +1434,18 @@ Não existe desculpa para não escrever testes. Existem [diversos frameworks de 
 ```swift
 import XCTest
 
-class MakeMomentJSGreatAgainTests: XCTestCase {
+class MakeMomentSwiftGreatAgainTests: XCTestCase {
 
   func testHandlesDateBoundaries() {
-    var date = MakeMomentJSGreatAgain("1/1/2015")
+    var date = MakeMomentSwiftGreatAgain("1/1/2015")
     date.addDays(30)
     XCTAssertEqual("1/31/2015", date)
 
-    date = MakeMomentJSGreatAgain("2/1/2016")
+    date = MakeMomentSwiftGreatAgain("2/1/2016")
     date.addDays(28)
     XCTAssertEqual("02/29/2016", date)
 
-    date = MakeMomentJSGreatAgain("2/1/2015")
+    date = MakeMomentSwiftGreatAgain("2/1/2015")
     date.addDays(28)
     XCTAssertEqual("03/01/2015", date)
   }
@@ -1456,22 +1456,22 @@ class MakeMomentJSGreatAgainTests: XCTestCase {
 ```swift
 import XCTest
 
-class MakeMomentJSGreatAgainTests: XCTestCase {
+class MakeMomentSwiftGreatAgainTests: XCTestCase {
 
   func testHandles30DayMonths() {
-    let date = MakeMomentJSGreatAgain("1/1/2015")
+    let date = MakeMomentSwiftGreatAgain("1/1/2015")
     date.addDays(30)
     XCTAssertEqual("1/31/2015", date)
   }
 
   func testHandlesLeapYear() {
-    let date = MakeMomentJSGreatAgain("2/1/2016")
+    let date = MakeMomentSwiftGreatAgain("2/1/2016")
     date.addDays(28)
     XCTAssertEqual("02/29/2016", date)
   }
 
   func testHandlesNonLeapYear() {
-    let date = MakeMomentJSGreatAgain("2/1/2015")
+    let date = MakeMomentSwiftGreatAgain("2/1/2015")
     date.addDays(28)
     XCTAssertEqual("03/01/2015", date)
   }
