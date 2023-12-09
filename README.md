@@ -24,7 +24,7 @@ A engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo mu
 
 Mais uma coisa: aprender isso não irá transformá-lo imediatamente em um desenvolvedor de software melhor, e trabalhar com esses princípios por muitos anos não garante que você não cometerá erros. Cada porção de código começa como um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições ao revisar com nossos colegas. Não se sinta culpado pelos primeiros rascunhos que ainda precisam de melhorias. Em vez disso, concentre-se em aprimorar seu código.
 
-## **Variáveis**
+# Variáveis
 ### Use nomes de variáveis que tenham significado e sejam pronunciáveis
 
 **Ruim:**
@@ -158,6 +158,52 @@ func paintCar(car: [String: String], color: String) {
 
 **[⬆ voltar ao topo](#Índice)**
 
+# Funções
+
+### Argumentos de funções (idealmente 2 ou menos)
+
+O cuidado na gestão de parâmetros em funções desempenha um papel crucial na facilitação dos testes e na manutenção do código, seguindo os princípios SOLID. Quando uma função possui mais de três argumentos, a complexidade cresce exponencialmente, exigindo testes detalhados para cada parâmetro separadamente.
+
+O ideal é manter no máximo dois argumentos, evitando três sempre que possível. Se a função exigir mais parâmetros, uma alternativa é consolidá-los em um objeto. Uma função com mais de dois argumentos geralmente tenta abranger diversas responsabilidades, sinalizando a necessidade de reavaliação. Em muitos casos, a passagem de um objeto como argumento é suficiente.
+
+Considerando a capacidade do Swift de criar objetos de maneira eficiente, o uso de objetos ao lidar com múltiplos argumentos é uma prática eficaz.
+
+**[⬆ Voltar ao Topo](#Índice)**
+
+**Ruim:**
+```swift
+func createMenu(title: String, body: String, buttonText: String, cancellable: Bool) {
+  // ...
+}
+```
+
+**Bom:**
+```swift
+struct MenuViewData {
+  let title: String
+  let body: String
+  let buttonText: String
+  let cancellable: Bool
+}
+
+func createMenu(viewData: MenuViewData) {
+  // ...
+}
+
+// Uso:
+let viewData = .init(
+  title: "Foo", 
+  body: "Bar", 
+  buttonText: "Baz", 
+  cancellable: true
+)
+
+createMenu(viewData: viewData)
+```
+
+**[⬆ voltar ao topo](#Índice)**
+
+# Funções
 ### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
 
 Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituídos por valores padrões.
@@ -766,7 +812,7 @@ inventoryTracker(item: "apples", requestModule: req, url: "www.inventory-awesome
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **Objetos e Estruturas de Dados**
+# Objetos e Estruturas de Dados
 ### Use getters e setters
 Usar getters e setters para acessar dados em objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
 
@@ -859,7 +905,7 @@ print("Employee name: \(employee())") // Employee name: John Doe
 **[⬆ voltar ao topo](#Índice)**
 
 
-## **Classes**
+# Classes
 
 ### Use encadeamento de métodos
 Este padrão é muito útil em Swift e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `self` no final de cada função, e você poderá encadear mais métodos de classe nele.
@@ -1012,7 +1058,7 @@ class Employee {
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **SOLID**
+# SOLID
 ### Princípio da Responsabilidade Única (SRP)
 Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não será conceitualmente coesa e dar-lhe-á diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante, porque, se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outros módulos que dependem dela no seu código.
 
@@ -1423,7 +1469,7 @@ inventoryTracker.requestItems()
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **Testes**
+# Testes
 Testes são mais importantes que entregas. Se você não possui testes ou uma quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espírito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](https://www.sonarsource.com/products/sonarqube/).
 
 Não existe desculpa para não escrever testes. Existem [diversos frameworks de testes em Swift ótimos](https://github.com/vsouza/awesome-ios#testing), então encontre um que seu time prefira. Quando você encontrar um que funciona para seu time, então tenha como objetivo sempre escrever testes para cada nova funcionalidade/módulo que você introduzir. Se seu método preferido for Desenvolvimento Orientado a Testes (TDD), isso é ótimo, mas o ponto principal é apenas ter certeza que você está alcançado suas metas de cobertura antes de lançar qualquer funcionalidade, ou refatorar uma já existente.
@@ -1480,7 +1526,7 @@ class MakeMomentSwiftGreatAgainTests: XCTestCase {
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **Concorrência**
+# Concorrência
 **[⬆ voltar ao topo](#Índice)**
 ### Async/Await são ainda mais limpas que Promessas
  Depois do iOS 13 o Swift traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua lógica imperativamente sem usar `completions` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do Swift hoje!
@@ -1530,7 +1576,7 @@ Task {
 **[⬆ voltar ao topo](#Índice)**
 
 
-## **Tratamento de Erros**
+# Tratamento de Erros
 `throw error` é uma coisa boa! Eles significam que o programa identificou
 com sucesso quando algo deu errado e está permitindo que você saiba parando
 a execução da função no processo atual, fechando o processo (em Swift), e
@@ -1602,7 +1648,7 @@ getData()
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **Formatação**
+# Formatação
 
 A formatação é subjetiva. Como muitas das regras aqui, não há uma regra dura e rápida que você precise seguir. A principal ideia é NÃO discutir sobre formatação. Há ferramentas que automatizam esse processo; deixe-as lidar com isso. A maior parte do código Swift deve seguir o [Guia de Estilo da Swift](https://google.github.io/swift/) da Google.
 
@@ -1712,7 +1758,7 @@ A formatação do código pode ser um tópico controverso, mas é importante man
 
 **[⬆ voltar ao topo](#Índice)**
 
-## **Comentários**
+# Comentários
 
 ### Apenas comente coisas que tenham complexidade de lógica de negócio.
 Comentários devem ser usados para explicar partes do código que têm uma complexidade não óbvia ou para fornecer informações adicionais sobre a lógica de negócio. Evite comentar o óbvio ou detalhes triviais que podem ser facilmente compreendidos lendo o código.
