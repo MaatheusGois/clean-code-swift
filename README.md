@@ -203,7 +203,6 @@ createMenu(viewData: viewData)
 
 **[⬆ voltar ao topo](#Índice)**
 
-# Funções
 ### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
 
 Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituídos por valores padrões.
@@ -360,69 +359,69 @@ Objetos são ditos serem puros quando eles não compartilham estado com outros o
 Existem três tipos diferentes de objetos aqui:
 
 1. **Objeto Impuro:**
-  ```swift
-  class Spaceship {
-    var fuelTank: Int
+```swift
+class Spaceship {
+  var fuelTank: Int
 
-    init(fuelTank: Int) {
-      self.fuelTank = fuelTank
-    }
-
-    func launch() {
-      Rocket().ignite(boosters: self.fuelTank)
-    }
-
-    func addFuel(fuel: Int) {
-      self.fuelTank += fuel
-    }
+  init(fuelTank: Int) {
+    self.fuelTank = fuelTank
   }
-  ```
+
+  func launch() {
+    Rocket().ignite(boosters: self.fuelTank)
+  }
+
+  func addFuel(fuel: Int) {
+    self.fuelTank += fuel
+  }
+}
+```
 
 2. **Objeto Menos Puro:**
-  ```swift
-  class Spaceship {
-    var fuelTank: Int
+```swift
+class Spaceship {
+  var fuelTank: Int
 
-    init(fuelTank: Int) {
-      self.fuelTank = fuelTank
-    }
-
-    func launch() {
-      Rocket().ignite(boosters: self.fuelTank)
-    }
-
-    func visitSpaceStation(spaceStation: SpaceStation) {
-      spaceStation.refuel(ship: self)
-    }
+  init(fuelTank: Int) {
+    self.fuelTank = fuelTank
   }
 
-  class SpaceStation {
-    func refuel(ship: Spaceship) {
-      ship.addFuel(fuel: self.fuelTank)
-    }
-
-    var fuelTank: Int
+  func launch() {
+    Rocket().ignite(boosters: self.fuelTank)
   }
-  ```
+
+  func visitSpaceStation(spaceStation: SpaceStation) {
+    spaceStation.refuel(ship: self)
+  }
+}
+
+class SpaceStation {
+  func refuel(ship: Spaceship) {
+    ship.addFuel(fuel: self.fuelTank)
+  }
+
+  var fuelTank: Int
+}
+```
 
 3. **Objeto Puro:**
-  ```swift
-  class Spaceship {
-    var fuelTank: Int
+```swift
+class Spaceship {
+  var fuelTank: Int
 
-    init(fuelTank: Int) {
-      self.fuelTank = fuelTank
-    }
-
-    func launch() {
-      Rocket().ignite(boosters: self.fuelTank)
-    }
-
-    func refuel(amount: Int) -> Spaceship {
-      return Spaceship(fuelTank: self.fuelTank + amount)
-    }
+  init(fuelTank: Int) {
+    self.fuelTank = fuelTank
   }
-  ```
+
+  func launch() {
+    Rocket().ignite(boosters: self.fuelTank)
+  }
+
+  func refuel(amount: Int) -> Spaceship {
+    return Spaceship(fuelTank: self.fuelTank + amount)
+  }
+}
+```
 
 Por que objetos puros são preferíveis? Eles são mais fáceis de testar e entender. Eles não podem ser mudados por outros sistemas enquanto estão sendo usados. Dados que são passados para eles podem ser confiáveis, e eles não têm efeitos colaterais que podem causar bugs difíceis de rastrear.
 
@@ -818,9 +817,7 @@ Usar getters e setters para acessar dados em objetos é bem melhor que simplesme
 
 * Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do seu código
 * Torna mais fácil fazer validação quando estiver dando um `set`
-* Encapsula a representação intern
-
-a
+* Encapsula a representação interna
 * Mais fácil de adicionar logs e tratamento de erros quando dando get and set
 * Você pode usar lazy loading nas propriedades de seu objeto, digamos, por exemplo, pegando ele de um servidor.
 
@@ -1320,68 +1317,92 @@ renderLargeShapes(shapes: shapes)
 
 **[⬆ voltar ao topo](#Índice)**
 
-### Princípio da Segregação de Interface (ISP)
-Swift não possui interfaces então esse princípio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em Swift.
+### Princípio da Segregação de Interface (ISP) com Protocolos
 
-ISP diz que "Clientes não devem ser forcados a depender de interfaces que eles não usam." Interfaces são contratos implícitos em Swift devido a sua tipagem pato (duck typing).
+Embora Swift não adote o conceito tradicional de interfaces, podemos aplicar o Princípio da Segregação de Interface (ISP) por meio de protocolos, aproveitando a flexibilidade do Swift.
 
-Um bom exemplo para se observar que demonstra esse princípio em Swift é de classes que requerem objetos de configurações grandes. Não pedir para clientes definirem grandes quantidades de opções é benéfico, porque na maioria das vezes eles não precisarão de todas as configurações. Torná-las opcionais ajuda a prevenir uma “interferência gorda”.
+O ISP declara que "Clientes não devem ser forçados a depender de interfaces que eles não usam." Em Swift, onde a tipagem pato (duck typing) prevalece, podemos criar protocolos que representam interfaces segregadas.
 
-**Ruim:**
+**Exemplo Ruim:**
+
 ```swift
-class DOMTraverser {
-  var settings: DOMSettings
+// Protocolo único com muitos requisitos
+protocol Styling {
+    var font: UIFont { get }
+    var backgroundColor: UIColor { get }
+    var cornerRadius: CGFloat { get }
 
-  init(settings: DOMSettings) {
-    self.settings = settings
-    self.setup()
-  }
-
-  func setup() {
-    self.rootNode = self.settings.rootNode
-    self.animationModule.setup()
-  }
-
-  func traverse() {
-    // ...
-  }
+    func applyStyles()
 }
 
-let $ = DOMTraverser(settings: DOMSettings(rootNode: document.getElementsByTagName('body'), animationModule: {}))
-```
+// Implementação do protocolo
+class BadStylableView: Styling {
+    var font: UIFont
+    var backgroundColor: UIColor
+    var cornerRadius: CGFloat
 
-**Bom:**
-```swift
-class DOMTraverser {
-  var settings: DOMSettings
-  var options: DOMOptions
-
-  init(settings: DOMSettings) {
-    self.settings = settings
-    self.options = settings.options
-    self.setup()
-  }
-
-  func setup() {
-    self.rootNode = self.settings.rootNode
-    self.setupOptions()
-  }
-
-  func setupOptions() {
-    if self.options.animationModule != nil {
-      // ...
+    init(font: UIFont, backgroundColor: UIColor, cornerRadius: CGFloat) {
+        self.font = font
+        self.backgroundColor = backgroundColor
+        self.cornerRadius = cornerRadius
     }
-  }
 
-  func traverse() {
-    // ...
-  }
+    func applyStyles() {
+        // Aplicar estilos com base na configuração
+    }
 }
 
-let $ = DOMTraverser(settings: DOMSettings(rootNode: document.getElementsByTagName('body'), options: DOMOptions(animationModule: {})))
+// Exemplo de uso
+let badView = BadStylableView(font: .systemFont(ofSize: 14), backgroundColor: .white, cornerRadius: 8)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**Exemplo Bom:**
+
+```swift
+// Protocolo para configuração de estilo
+protocol StyleConfigurable {
+    var font: UIFont { get }
+    var backgroundColor: UIColor { get }
+    var cornerRadius: CGFloat { get }
+}
+
+// Protocolo para exibição de estilos
+protocol StyleApplicable {
+    func applyStyles()
+}
+
+// Implementação padrão para configuração de estilo
+struct AppearanceConfig: StyleConfigurable {
+    var font: UIFont
+    var backgroundColor: UIColor
+    var cornerRadius: CGFloat
+}
+
+// View que adota os protocolos
+class GoodStylableView: StyleApplicable {
+    var styleConfig: StyleConfigurable
+
+    init(styleConfig: StyleConfigurable) {
+        self.styleConfig = styleConfig
+        self.setup()
+    }
+
+    func setup() {
+        applyStyles()
+    }
+
+    func applyStyles() {
+        // Aplicar estilos com base na configuração
+    }
+}
+
+// Exemplo de uso
+let goodView = GoodStylableView(styleConfig: AppearanceConfig(font: .systemFont(ofSize: 14)))
+```
+
+No exemplo ruim, um único protocolo `Styling` contém muitos requisitos, forçando os clientes a implementarem métodos e propriedades que podem não ser necessários. No exemplo bom, utilizamos protocolos segregados (`StyleConfigurable` e `StyleApplicable`) para permitir uma implementação mais específica e flexível.
+
+**[⬆ Voltar ao Topo](#Índice)**
 
 ### Princípio da Inversão de Dependência (DIP)
 Este princípio nos diz duas coisas essenciais:
@@ -1613,40 +1634,6 @@ do {
     // OU as três!
 }
 ```
-
-### Não ignore promessas rejeitadas
-Pela mesma razão que você não deveria ignorar erros
-captados de `do/catch`
-
-**Ruim:**
-```swift
-getData()
-    .map { data in
-        funcThatMightThrow(data)
-    }
-    .catch { error in
-        print(error)
-    }
-```
-
-**Bom:**
-```swift
-getData()
-    .map { data in
-        funcThatMightThrow(data)
-    }
-    .catch { error in
-        // One option (more noisy than print):
-        print(error)
-        // Another option:
-        notifyUserOfError(error)
-        // Another option:
-        reportErrorToService(error)
-        // OR do all three!
-    }
-```
-
-**[⬆ voltar ao topo](#Índice)**
 
 # Formatação
 
