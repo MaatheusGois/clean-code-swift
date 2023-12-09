@@ -13,18 +13,16 @@
   10. [Formatação](#formatação)
   11. [Comentários](#comentários)
 
-## Introdução
+# Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
 
-Princípios da Engenharia de Software, do livro de Robert C. Martin
-[*Código Limpo*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675),
-adaptados para Swift. Isto não é um guia de estilos. É um guia para se produzir código [legível, reutilizável e refatorável](https://github.com/ryanmcdermott/3rs-of-software-architecture) em Swift.
+Princípios de Engenharia de Software, do livro de Robert C. Martin [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adaptados para Swift. Este não é um guia de estilo. É um guia para produzir código [legível, reutilizável e passível de refatoração](https://github.com/ryanmcdermott/3rs-of-software-architecture) em Swift.
 
-Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são um consenso universal. Estes princípios são orientações e nada mais, entretanto, foram codificados durante muitos anos de experiência coletiva pelos autores de *Código limpo*.
+Não é necessário seguir rigorosamente todos os princípios demonstrados, e ainda menos eles são um consenso universal. Esses princípios são diretrizes e nada mais, contudo, foram codificados ao longo de muitos anos de experiência coletiva pelos autores de *Clean Code*.
 
-Nosso ofício de engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quanto a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código Swift que tanto você e o seu time produzirem.
+A engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão antiga quanto a própria arquitetura, talvez tenhamos regras mais rígidas para seguir. Por enquanto, deixe que essas diretrizes sirvam como critério para avaliar a qualidade do código Swift que você e sua equipe produzem.
 
-Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um desenvolvedor de software melhor, trabalhar com eles por muitos anos não quer dizer que você não cometerá erros. Toda porção de código começa com um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições quando revisamos com nossos colegas. Não se sinta culpado pelos primeiros rascunhos que ainda precisam de melhorias. Ao invés, desconte em seu código.
+Mais uma coisa: aprender isso não irá transformá-lo imediatamente em um desenvolvedor de software melhor, e trabalhar com esses princípios por muitos anos não garante que você não cometerá erros. Cada porção de código começa como um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições ao revisar com nossos colegas. Não se sinta culpado pelos primeiros rascunhos que ainda precisam de melhorias. Em vez disso, concentre-se em aprimorar seu código.
 
 ## **Variáveis**
 ### Use nomes de variáveis que tenham significado e sejam pronunciáveis
@@ -38,7 +36,6 @@ let currentDateStr = DateFormatter.localizedString(from: Date(), dateStyle: .sho
 ```swift
 let currentDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Use o mesmo vocabulário para o mesmo tipo de variável
 
@@ -53,7 +50,6 @@ getCustomerRecord()
 ```swift
 getUser()
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Use nomes pesquisáveis
 Nós iremos ler mais código que escrever. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis. Ferramentas como [buddy.js](https://github.com/danielstjules/buddy.js) e [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) podem ajudar a identificar constantes sem nome.
@@ -71,7 +67,6 @@ let millisecondsPerDay = 86400000
 
 setTimeout(blastOff, millisecondsPerDay)
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Use variáveis explicativas
 **Ruim:**
@@ -91,7 +86,6 @@ if let match = cityZipCodeRegex.firstMatch(in: address) {
     saveCityZipCode(city, zipCode)
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Evite Mapeamento Mental
 Explicito é melhor que implícito.
@@ -122,7 +116,6 @@ locations.forEach({ location in
     dispatch(location)
 })
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Não adicione contextos desnecessários
 Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repita nos nomes de suas variáveis.
@@ -152,7 +145,6 @@ func paintCar(car: [String: String], color: String) {
     car["color"] = color
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
 
@@ -172,7 +164,6 @@ func createMicrobrewery(breweryName: String = "Hipster Brew Co.") {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Funções devem fazer uma coisa
 Essa é de longe a regra mais importante em engenharia de software. Quando funções fazem mais que uma coisa, elas se tornam difíceis de serem compostas, testadas e raciocinadas. Quando você pode isolar uma função para realizar apenas uma ação, elas podem ser refatoradas facilmente e seu código ficará muito mais limpo. Se você não levar mais nada desse guia além disso, você já estará na frente de muitos desenvolvedores.
@@ -202,7 +193,6 @@ func isActiveClient(client: Client) -> Bool {
   return clientRecord.isActive()
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Nomes de funções devem dizer o que elas fazem
 
@@ -227,213 +217,204 @@ func addMonthToDate(month: Int, date: Date) {
 let date = Date()
 addMonthToDate(month: 1, date: date)
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Funções devem ter apenas um nível de abstração
-Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e testes mais fáceis.
+Quando você tem mais de um nível de abstração, sua função geralmente está fazendo coisas demais. Dividir suas funções leva a uma melhor reusabilidade e testabilidade.
 
 **Ruim:**
 ```swift
-func parseBetterJSAlternative(code: String) {
-  let regexes: [Regex] = [
-    // ...
-  ]
+func parseInput(input: String) {
+  // ...
+  let inputData = ...
+  // ...
+  saveData(inputData)
+}
 
-  let statements = code.split(separator: " ")
-  var tokens: [Token] = []
-  for regex in regexes {
-    for statement in statements {
-      // ...
-    }
-  }
-
-  var ast: [ASTNode] = []
-  for token in tokens {
-    // lex...
-  }
-
-  for node in ast {
-    // parse...
-  }
+func saveData(data: Data) {
+  // ...
+  database.save(data)
 }
 ```
 
 **Bom:**
 ```swift
-func tokenize(code: String) -> [Token] {
-  let regexes: [Regex] = [
-    // ...
-  ]
-
-  let statements = code.split(separator: " ")
-  var tokens: [Token] = []
-  for regex in regexes {
-    for statement in statements {
-      tokens.append( /* ... */ )
-    }
-  }
-
-  return tokens
+func parseInput(input: String) {
+  // ...
+  let inputData = ...
+  saveData(data: inputData)
 }
 
-func lexer(tokens: [Token]) -> [ASTNode] {
-  var ast: [ASTNode] = []
-  for token in tokens {
-    ast.append( /* ... */ )
-  }
-
-  return ast
-}
-
-func parseBetterJSAlternative(code: String) {
-  let tokens = tokenize(code: code)
-  let ast = lexer(tokens: tokens)
-  for node in ast {
-    // parse...
-  }
+func saveData(data: Data) {
+  // ...
+  database.save(data)
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Remova código duplicado
-Faça absolutamente seu melhor para evitar código duplicado. Código duplicado quer dizer que existe mais de um lugar onde você deverá alterar algo se precisar mudar alguma lógica.
+Faça o melhor para evitar código duplicado. Código duplicado é ruim porque significa que há mais do que um lugar para se mudar alguma coisa se você precisar fazer uma mudança.
 
-Imagine que você é dono de um restaurante e você toma conta do seu estoque: todos os seus tomates, cebolas, alhos, temperos, etc. Se você tem múltiplas listas onde guarda estas informações, então você terá que atualizar todas elas quando servir um prato que tenha tomates. Se você tivesse apenas uma lista, teria apenas um lugar para atualizar!
+Imagine se você tem um restaurante e mantém uma lista de todos os seus clientes em dois lugares: um no qual você mantém a ordem deles para o chef e outro no qual você mantém a ordem deles para a entrega. Se você tiver clientes que cancelam, você agora tem que o fazer em dois lugares. Se você só tiver uma lista, há apenas um lugar para se atualizar!
 
-Frequentemente, você possui código duplicado porque você tem duas ou mais coisas levemente diferentes, que possuem muito em comum, mas suas diferenças lhe forçam a ter mais duas ou três funções que fazem muito das mesmas coisas. Remover código duplicado significa criar uma abstração que seja capaz de lidar com este conjunto de coisas diferentes com apenas uma função/módulo/classe.
+O que acontece se você esquecer de atualizar em um lugar e não no outro? E se o pedido de entrega chegar enquanto o chef estiver fazendo outra coisa e ele não tiver visto o pedido? Agora você tem um problema.
 
-Conseguir a abstração correta é crítico, por isso que você deveria seguir os princípios SOLID descritos na seção *Classes*. Abstrações ruins podem ser piores do que código duplicado, então tome cuidado! Dito isto, se você puder fazer uma boa abstração, faça-a! Não repita a si mesmo, caso contrário você se pegará atualizando muitos lugares toda vez que precisar mudar qualquer coisinha.
+Muitas vezes, você tem código duplicado porque você tem duas ou mais coisas ligeiramente diferentes, que compartilham muitas coisas em comum, mas suas diferenças os forçam a ter dois ou mais métodos que fazem coisas muito similares. Remover o código duplicado significa criar uma abstração que pode lidar com essas diferenças com apenas uma função/método.
+
+Fazendo isso, você agora tem apenas um lugar para atualizar se algo mudar.
 
 **Ruim:**
 ```swift
-func showDeveloperList(developers: [Developer]) {
-  for developer in developers {
-    let expectedSalary = developer.calculateExpectedSalary()
-    let experience = developer.getExperience()
-    let githubLink = developer.getGithubLink()
-    let data = [
-      "expectedSalary": expectedSalary,
-      "experience": experience,
-      "githubLink": githubLink
-    ]
-
-    render(data: data)
-  }
+func showDeveloper(name: String) {
+  print("Developer: \(name)")
+  print("Coding...")
 }
 
-func showManagerList(managers: [Manager]) {
-  for manager in managers {
-    let expectedSalary = manager.calculateExpectedSalary()
-    let experience = manager.getExperience()
-    let portfolio = manager.getMBAProjects()
-    let data = [
-      "expectedSalary": expectedSalary,
-      "experience": experience,
-      "portfolio": portfolio
-    ]
-
-    render(data: data)
-  }
+func showManager(name: String) {
+  print("Manager: \(name)")
+  print("Meeting...")
 }
 ```
 
 **Bom:**
 ```swift
-func showEmployeeList(employees: [Employee]) {
-  for employee in employees {
-    let expectedSalary = employee.calculateExpectedSalary()
-    let experience = employee.getExperience()
+func showPerson(name: String, role: String) {
+  print("\(role): \(name)")
+  if role == "Developer" {
+    print("Coding...")
+  } else if role == "Manager" {
+    print("Meeting...")
+  }
+}
+```
 
-    var data = [
-      "expectedSalary": expectedSalary,
-      "experience": experience
-    ]
+### Use Objetos Puros
+Objetos são ditos serem puros quando eles não compartilham estado com outros objetos. Imagine que você está no espaço sideral e você tem uma nave espacial. Esta nave espacial tem um tanque de combustível. Imagine que existem vários sistemas diferentes na nave espacial que podem modificar esse tanque de combustível.
 
-    switch employee.type {
-    case .manager:
-      data["portfolio
+Existem três tipos diferentes de objetos aqui:
 
-"] = (employee as! Manager).getMBAProjects()
-    case .developer:
-      data["githubLink"] = (employee as! Developer).getGithubLink()
+1. **Objeto Impuro:**
+  ```swift
+  class Spaceship {
+    var fuelTank: Int
+
+    init(fuelTank: Int) {
+      self.fuelTank = fuelTank
     }
 
-    render(data: data)
-  }
-}
-```
-**[⬆ voltar ao topo](#Índice)**
+    func launch() {
+      Rocket().ignite(boosters: self.fuelTank)
+    }
 
-### Defina (set) objetos padrões com Object.assign
+    func addFuel(fuel: Int) {
+      self.fuelTank += fuel
+    }
+  }
+  ```
+
+2. **Objeto Menos Puro:**
+  ```swift
+  class Spaceship {
+    var fuelTank: Int
+
+    init(fuelTank: Int) {
+      self.fuelTank = fuelTank
+    }
+
+    func launch() {
+      Rocket().ignite(boosters: self.fuelTank)
+    }
+
+    func visitSpaceStation(spaceStation: SpaceStation) {
+      spaceStation.refuel(ship: self)
+    }
+  }
+
+  class SpaceStation {
+    func refuel(ship: Spaceship) {
+      ship.addFuel(fuel: self.fuelTank)
+    }
+
+    var fuelTank: Int
+  }
+  ```
+
+3. **Objeto Puro:**
+  ```swift
+  class Spaceship {
+    var fuelTank: Int
+
+    init(fuelTank: Int) {
+      self.fuelTank = fuelTank
+    }
+
+    func launch() {
+      Rocket().ignite(boosters: self.fuelTank)
+    }
+
+    func refuel(amount: Int) -> Spaceship {
+      return Spaceship(fuelTank: self.fuelTank + amount)
+    }
+  }
+  ```
+
+Por que objetos puros são preferíveis? Eles são mais fáceis de testar e entender. Eles não podem ser mudados por outros sistemas enquanto estão sendo usados. Dados que são passados para eles podem ser confiáveis, e eles não têm efeitos colaterais que podem causar bugs difíceis de rastrear.
+
+
+### Faça decisões que sejam baseadas em um objeto
 
 **Ruim:**
 ```swift
-var menuConfig = [
-  "title": nil,
-  "body": "Bar",
-  "buttonText": nil,
-  "cancellable": true
-]
-
-func createMenu(config: [String: Any]?) {
-  config?["title"] = config?["title"] ?? "Foo"
-  config?["body"] = config?["body"] ?? "Bar"
-  config?["buttonText"] = config?["buttonText"] ?? "Baz"
-  config?["cancellable"] = config?["cancellable"] ?? true
-}
-
-createMenu(config: menuConfig)
-```
-
-**Bom:**
-```swift
-var menuConfig = [
-  "title": "Order",
-  // Usuário não incluiu a chave 'body'
-  "buttonText": "Send",
-  "cancellable": true
-]
-
-func createMenu(config: [String: Any]?) {
-  config = config ?? [:]
-  config!["title"] = config!["title"] ?? "Foo"
-  config!["body"] = config!["body"] ?? "Bar"
-  config!["buttonText"] = config!["buttonText"] ?? "Baz"
-  config!["cancellable"] = config!["cancellable"] ?? true
-  // configuração agora é: ["title": "Order", "body": "Bar", "buttonText": "Send", "cancellable": true]
+if car.engine == "v8" {
   // ...
 }
 
-createMenu(config: menuConfig)
+if bike.tires == "fat" {
+  // ...
+}
 ```
-**[⬆ voltar ao topo](#Índice)**
 
+**Bom:**
+```swift
+class Engine {
+  var type: String
+}
 
-### Não use flags como parâmetros de funções
-Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estão seguindo caminhos de código diferentes baseadas em um valor booleano.
+class Tire {
+  var type: String
+}
+
+if car.engine.type == "v8" {
+  // ...
+}
+
+if bike.tires.type == "fat" {
+  // ...
+}
+```
+
+### Evite o uso de flags como parâmetros de função
+Funções que têm sinalizadores booleanos como parâmetros são mais difíceis de entender do que funções que fazem apenas uma coisa. Sinalizadores indicam que a função faz mais de uma coisa. Separe essas funções em várias funções se for o caso.
 
 **Ruim:**
 ```swift
-func createFile(name: String, temp: Bool) {
-  if temp {
-    fs.create("./temp/\(name)")
+func createFile(name: String, temporary: Bool) {
+  if temporary {
+    // Cria um arquivo temporário
   } else {
-    fs.create(name)
+    // Cria um arquivo permanente
   }
 }
 ```
 
 **Bom:**
 ```swift
-func createFile(name: String) {
-  fs.create(name)
+func createTemporaryFile(name: String) {
+  // Cria um arquivo temporário
 }
 
-func createTempFile(name: String) {
-  createFile("./temp/\(name)")
+func createPermanentFile(name: String) {
+  // Cria um arquivo permanente
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Evite Efeitos Colaterais (parte 1)
 Uma função produz um efeito colateral se ela faz alguma coisa que não seja receber um valor de entrada e retornar outro(s) valor(es). Um efeito colateral pode ser escrever em um arquivo, modificar uma variável global, ou acidentalmente transferir todo seu dinheiro para um estranho.
@@ -446,30 +427,37 @@ O ponto principal é evitar armadilhas como compartilhar o estado entre objetos 
 ```swift
 // Variável global referenciada pela função seguinte
 // Se tivéssemos outra função que usa esse nome, então seria um vetor (array) e poderia quebrar seu código
-var name = 'Ryan McDermott'
+var name = "Matheus Gois"
 
 func splitIntoFirstAndLastName() {
-  name = name.split(separator: " ")
+  name = name.split(separator: " ").joined(separator: " ")
 }
 
 splitIntoFirstAndLastName()
 
-print(name) // ['Ryan', 'McDermott']
+print(name) // 'Matheus Gois'
 ```
 
 **Bom:**
 ```swift
-func splitIntoFirstAndLastName(name: String) -> [String] {
-  return name.split(separator: " ").map { String($0) }
+func splitIntoFirstAndLastName(name: String) -> (firstName: String, lastName: String) {
+  let components = name.split(separator: " ").map { String($0) }
+  guard components.count >= 2 else {
+    return (firstName: name, lastName: "")
+  }
+  let firstName = components[0]
+  let lastName = components[1..<components.count].joined(separator: " ")
+  return (firstName: firstName, lastName: lastName)
 }
 
-let name = 'Ryan McDermott'
-let newName = splitIntoFirstAndLastName(name: name)
+let fullName = "Matheus Gois"
+let nameComponents = splitIntoFirstAndLastName(name: fullName)
 
-print(name) // 'Ryan McDermott'
-print(newName) // ['Ryan', 'McDermott']
+print(fullName) // 'Matheus Gois'
+print(nameComponents.firstName) // 'Ryan'
+print(nameComponents.lastName) // 'McDermott'
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Evite Efeitos Colaterais (parte 2)
 Em Swift, tipos primitivos são passados por valor e objetos/vetores são passados por referência. No caso de objetos e vetores, se sua função faz uma mudança em um vetor de um carrinho de compras, por exemplo, adicionando um item para ser comprado, então qualquer outra função que use o vetor `cart` também será afetada por essa adição. Isso pode ser ótimo, mas também pode ser ruim. Vamos imaginar uma situação ruim:
@@ -499,12 +487,14 @@ func addItemToCart(item: CartItem) {
 **Bom:**
 ```swift
 func addItemToCart(cart: [CartItem], item: CartItem) -> [CartItem] {
-  return cart + [item]
+  var updatedCart = cart
+  updatedCart.append(item)
+  return updatedCart
 }
 ```
 
 ### Não escreva em funções globais
-Poluir globais é uma prática ruim em Swift porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do Swift para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor? É por isso que seria muito melhor usar as classes padrões do ES2015/ES6 e apenas estender o `Array` global.
+Poluir globais é uma prática ruim em Swift porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do Swift para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor?
 
 **Ruim:**
 ```swift
@@ -518,16 +508,14 @@ extension Array {
 
 **Bom:**
 ```swift
-class SuperArray<Element>: Array<Element> {
+class ExtendedArray<Element>: Array<Element> {
   func diff(_ comparisonArray: [Element]) -> [Element] {
     let hash = Set(comparisonArray)
     return filter { !hash.contains($0) }
   }
 }
-
-
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Favoreça programação funcional sobre programação imperativa
 Swift não é uma linguagem funcional da mesma forma que Haskell é, mas tem um toque de funcional em si. Linguagens funcionais são mais limpas e fáceis de se testar. Favoreça esse tipo de programação quando puder.
@@ -561,6 +549,7 @@ let totalOutput = programmerOutput
   .map { $0.linesOfCode }
   .reduce(0, +)
 ```
+
 **[⬆ volta ao topo](#Índice)**
 
 ### Encapsule condicionais
@@ -582,7 +571,7 @@ if shouldShowSpinner(fsm: fsmInstance, listNode: listNodeInstance) {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Evite negações de condicionais
 
@@ -607,7 +596,7 @@ if isDOMNodePresent(node: node) {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Evite condicionais
 Esta parece ser uma tarefa impossível. Da primeira vez que as pessoas escutam isso, a maioria diz, “como eu supostamente faria alguma coisa sem usar `if`? ” A resposta é que você pode usar polimorfismo para realizar a mesma tarefa em diversos casos. A segunda questão é geralmente, “bom, isso é ótimo, mas porque eu deveria fazer isso?” A resposta é um conceito de código limpo aprendido previamente: uma função deve fazer apenas uma coisa. Quando você tem classes e funções que tem declarações `if`, você esta dizendo para seu usuário que sua função faz mais de uma coisa. Relembre-se, apenas uma coisa.
@@ -658,7 +647,7 @@ class Cessna: Airplane {
   }
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Evite checagem de tipos (parte 1)
 Swift não possui tipos, o que significa que suas funções podem receber qualquer tipo de argumento. Algumas vezes esta liberdade pode te morder, e se torna tentador fazer checagem de tipos em suas funções. Existem muitas formas de evitar ter que fazer isso. A primeira coisa a se considerar são APIs consistentes.
@@ -680,7 +669,7 @@ func travelToTexas(vehicle: Vehicle) {
   vehicle.move(currentLocation: self.currentLocation, newLocation: Location("texas"))
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
+
 
 ### Evite checagem de tipos (parte 2)
 Se você estiver trabalhando com valores primitivos básicos como strings e inteiros, e você não pode usar polimorfismo, mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o Swift normal, já que fornece uma tipagem estática sobre a sintaxe padrão do Swift. O problema com checagem manual em Swift é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu Swift limpo, escreva bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso, mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
@@ -704,27 +693,7 @@ func combine(val1: Any, val2: Any) -> String {
   return String(describing: val1) + String(describing: val2)
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
-### Não otimize demais
-Navegadores modernos fazem muitas otimizações por debaixo dos panos em tempo de execução. Muitas vezes, se você estiver otimizando, está apenas perdendo o seu tempo. [Existem bons recursos](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) para se verificar onde falta otimização. Foque nesses por enquanto, até que eles sejam consertados caso seja possível.
-
-**Ruim:**
-```swift
-// Em navegadores antigos, cada iteração de `list.count` não cacheada seria custosa
-// devido a recomputação de `list.count`. Em navegadores modernos, isto é otimizado.
-for i in 0..<list.count {
-  // ...
-}
-```
-
-**Bom:**
-```swift
-for i in 0..<list.count {
-  // ...
-}
-```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Remova código morto
 Código morto é tão ruim quanto código duplicado. Não existe nenhum motivo para deixá-lo em seu código. Se ele não estiver sendo chamado, livre-se dele. Ele ainda estará a salvo no seu histórico de versionamento se ainda precisar dele.
@@ -752,7 +721,6 @@ func newRequestModule(url: String) {
 let req = newRequestModule
 inventoryTracker(item: "apples", requestModule: req, url: "www.inventory-awesome.io")
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ## **Objetos e Estruturas de Dados**
 ### Use getters e setters
@@ -804,7 +772,6 @@ func makeBankAccount() -> BankAccount {
 let account = makeBankAccount()
 account.setBalance(100)
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Faça objetos terem membros privados
 Isto pode ser alcançado através de closures (para ES5 e além).
@@ -823,8 +790,8 @@ class Employee {
   }
 }
 
-let employee = Employee(name: "John Doe")
-print("Employee name: \(employee.getName())") // Employee name: John Doe
+let employee = Employee(name: "Matheus Gois")
+print("Employee name: \(employee.getName())") // Employee name: Matheus Gois
 employee.name = "Jane Doe"
 print("Employee name: \(employee.getName())") // Employee name: Jane Doe
 ```
@@ -839,107 +806,12 @@ func makeEmployee(name: String) -> () -> String {
   }
 }
 
-let employee = makeEmployee(name: "John Doe")
-print("Employee name: \(employee())") // Employee name: John Doe
+let employee = makeEmployee(name: "Matheus Gois")
+print("Employee name: \(employee())") // Employee name: Matheus Gois
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 
 ## **Classes**
-### Prefira classes do ES2015/ES6 ao invés de funções simples do ES5
-É muito difícil conseguir que herança de classe, construtores, e definições de métodos sejam legíveis para classes de ES5 clássicas. Se você precisa de herança (e esteja ciente que você talvez não precise), então prefira classes ES2015/ES6. Entretanto, prefira funções pequenas ao invés de classes até que você precise de objetos maiores e mais complexos.
-
-**Ruim:**
-```swift
-class Animal {
-  var age: Int
-
-  init(age: Int) {
-    self.age = age
-  }
-
-  func move() {}
-}
-
-class Mammal: Animal {
-  var furColor: String
-
-  init(age: Int, furColor: String) {
-    self.furColor = furColor
-    super.init(age: age)
-  }
-
-  func liveBirth() {}
-}
-
-class Human: Mammal {
-  var languageSpoken: String
-
-  init(age: Int, furColor: String, languageSpoken: String) {
-    self.languageSpoken = languageSpoken
-    super.init(age: age, furColor: furColor)
-  }
-
-  func speak() {}
-}
-```
-
-**Bom:**
-```swift
-protocol Movable {
-  func move()
-}
-
-class Animal: Movable {
-  var age: Int
-
-  init(age: Int) {
-    self.age = age
-  }
-
-  func move() {}
-}
-
-protocol LiveBirth {
-  func liveBirth()
-}
-
-class Mammal: Animal, LiveBirth {
-  var furColor: String
-
-  init(age: Int, furColor: String) {
-    self.furColor = furColor
-    super.init(age: age)
-  }
-
-  func liveBirth() {}
-}
-
-class Speaking {
-  var languageSpoken: String
-
-  init(languageSpoken: String) {
-    self.languageSpoken = languageSpoken
-  }
-
-  func speak() {}
-}
-
-class Human: Mammal {
-  var speaker: Speaking
-
-  init(age: Int, furColor: String, languageSpoken: String) {
-    self.speaker = Speaking(languageSpoken: languageSpoken)
-    super.init(age: age, furColor: furColor)
-  }
-
-  func speak() {
-    speaker.speak()
-  }
-}
-```
-**[⬆ voltar ao topo](#Índice)**
-
 
 ### Use encadeamento de métodos
 Este padrão é muito útil em Swift e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `self` no final de cada função, e você poderá encadear mais métodos de classe nele.
@@ -984,9 +856,9 @@ car.setColor("pink").save()
 **Bom:**
 ```swift
 class Car {
-  var make: String
-  var model: String
-  var color: String
+  private var make: String
+  private var model: String
+  private var color: String
 
   init(make: String, model: String, color: String) {
     self.make = make
@@ -1018,7 +890,6 @@ class Car {
 let car = Car(make: "Ford", model: "F-150", color: "red")
 car.setColor("pink").save()
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Prefira composição ao invés de herança
 Como dito famosamente em [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Gangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razões para usar herança e muitas boas razões para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
@@ -1088,7 +959,6 @@ class Employee {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ## **SOLID**
 ### Princípio da Responsabilidade Única (SRP)
@@ -1145,7 +1015,6 @@ class UserSettings {
   }
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio do Aberto/Fechado (OCP)
 Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse princípio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar código já existente.
@@ -1234,7 +1103,6 @@ class HttpRequester {
   }
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 
 ### Princípio de Substituição de Liskov (LSP)
@@ -1347,7 +1215,6 @@ func renderLargeShapes(shapes: [Shape]) {
 let shapes: [Shape] = [Rectangle(width: 4, height: 5), Rectangle(width: 4, height: 5), Square(length: 5)]
 renderLargeShapes(shapes: shapes)
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Segregação de Interface (ISP)
 Swift não possui interfaces então esse princípio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em Swift.
@@ -1409,7 +1276,6 @@ class DOMTraverser {
 
 let $ = DOMTraverser(settings: DOMSettings(rootNode: document.getElementsByTagName('body'), options: DOMOptions(animationModule: {})))
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Inversão de Dependência (DIP)
 Este princípio nos diz duas coisas essenciais:
@@ -1494,7 +1360,6 @@ class InventoryRequesterV2: RequesterProtocol {
 let inventoryTracker = InventoryTracker(items: ["apples", "bananas"], requester: InventoryRequesterV2())
 inventoryTracker.requestItems()
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ## **Testes**
 Testes são mais importantes que entregas. Se você não possui testes ou uma quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espírito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](http://gotwarlost.github.io/istanbul/).
@@ -1550,74 +1415,10 @@ class MakeMomentJSGreatAgainTests: XCTestCase {
   }
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ## **Concorrência**
-### Use Promessas, não callbacks
-Callbacks não são limpos, e eles causam uma quantidade excessiva de aninhamentos. A partir de Swift 5.5, você pode usar async/await para lidar com assincronia de uma forma mais limpa. Isso oferece uma abordagem mais legível e funcional para o código assíncrono.
-
-**Ruim:**
-```swift
-import Foundation
-
-func fetchData(completion: @escaping (Result<Data, Error>) -> Void) {
-    let url = URL(string: "https://api.example.com/data")!
-    let task = URLSession.shared.dataTask(with: url) { data, response, error
-
- in
-        if let error = error {
-            completion(.failure(error))
-            return
-        }
-        guard let data = data else {
-            let error = NSError(domain: "com.example", code: 42, userInfo: nil)
-            completion(.failure(error))
-            return
-        }
-        completion(.success(data))
-    }
-    task.resume()
-}
-
-func processFetchedData(data: Data) {
-    // Process the data
-}
-
-fetchData { result in
-    switch result {
-    case .success(let data):
-        processFetchedData(data: data)
-    case .failure(let error):
-        print("Error: \(error)")
-    }
-}
-```
-
-**Bom:**
-```swift
-import Foundation
-
-func fetchData() async throws -> Data {
-    let url = URL(string: "https://api.example.com/data")!
-    let (data, _) = try await URLSession.shared.data(from: url)
-    return data
-}
-
-func processFetchedData(data: Data) {
-    // Process the data
-}
-
-do {
-    let data = try await fetchData()
-    processFetchedData(data: data)
-} catch {
-    print("Error: \(error)")
-}
-```
-**[⬆ voltar ao topo](#Índice)**
-
 ### Async/Await são ainda mais limpas que Promessas
-Promessas são uma alternativa bem mais limpa que callbacks, mas o Swift traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua lógica imperativamente sem usar `then` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do Swift hoje!
+ Depois do iOS 13 o Swift traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua lógica imperativamente sem usar `completions` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do Swift hoje!
 
 **Ruim:**
 ```swift
@@ -1660,7 +1461,6 @@ Task {
     await getCleanCodeArticle()
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 
 ## **Tratamento de Erros**
@@ -1733,7 +1533,6 @@ getData()
     }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
 
 
 ## **Formatação**
@@ -1844,7 +1643,6 @@ func foo(a: Int, b: Int) -> Int {
 ### Siga a formatação recomendada pela SwiftLint
 A formatação do código pode ser um tópico controverso, mas é importante manter um padrão consistente dentro do seu projeto. O SwiftLint é uma ferramenta útil para impor padrões de formatação. Integre o SwiftLint no seu fluxo de trabalho para garantir que o código siga as práticas recomendadas.
 
-**[⬆ voltar ao topo](#Índice)**
 
 ## **Comentários**
 
@@ -1878,7 +1676,6 @@ func calculateTotalScore(score: Int) {
     print("A pontuação total é: \(totalScore)")
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Não deixe código comentado na sua base de código
 O controle de versão (como o Git) é uma ferramenta poderosa para rastrear alterações ao longo do tempo. Não há necessidade de manter código comentado na base de código, pois ele apenas adiciona ruído e dificulta a leitura.
@@ -1907,7 +1704,6 @@ func doSomething() {
     // ...
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
 
 ### Não comente registro de alterações
 Evite adicionar comentários de registro de alterações diretamente no código. Use um sistema de controle de versão para rastrear as alterações e forneça registros de alterações no repositório ou em um arquivo específico.
@@ -1933,7 +1729,6 @@ func processInput(input: String) {
 
 Registros de alterações podem ser mantidos em um arquivo `CHANGELOG.md` ou similar, ou dentro das mensagens de commit no controle de versão.
 
-**[⬆ voltar ao topo](#Índice)**
 
 ### Evite marcadores de posição
 Evite usar marcadores de posição, como barras ou linhas de asteriscos, para dividir ou destacar seções de código. Em vez disso, use uma boa estrutura de código com identação e formatação adequadas para tornar o código facilmente compreensível.
@@ -1941,23 +1736,17 @@ Evite usar marcadores de posição, como barras ou linhas de asteriscos, para di
 **Ruim:**
 ```swift
 struct Example {
-    //////////////////////////////////////
-    // Propriedades
-    //////////////////////////////////////
+    // MARK: - Propriedades
     var name: String
     var age: Int
     
-    //////////////////////////////////////
-    // Inicializador
-    //////////////////////////////////////
+    // MARK - Inicializador
     init(name: String, age: Int) {
         self.name = name
         self.age = age
     }
     
-    //////////////////////////////////////
-    // Funções
-    //////////////////////////////////////
+    // MARK - Funções
     
     // Método para realizar uma ação
     func performAction() {
@@ -1982,4 +1771,3 @@ struct Example {
     }
 }
 ```
-**[⬆ voltar ao topo](#Índice)**
