@@ -1,88 +1,88 @@
 # clean-code-swift
 
-## Índice
-  1. [Introdução](#introdução)
-  2. [Variáveis](#variáveis)
-  3. [Funções](#funções)
-  4. [Objetos e Estruturas de Dados](#objetos-e-estruturas-de-dados)
+## Index
+  1. [Introduction](#introduction)
+  2. [Variables](#variables)
+  3. [Functions](#functions)
+  4. [Objects and Data Structures](#objects-and-data-structures)
   5. [Classes](#classes)
   6. [SOLID](#solid)
-  7. [Testes](#testes)
-  8. [Concorrência](#concorrência)
-  9. [Tratamento de Erros](#tratamento-de-erros)
-  10. [Formatação](#formatação)
-  11. [Comentários](#comentários)
+  7. [Testing](#testing)
+  8. [Concurrency](#concurrency)
+  9. [Error Handling](#error-handling)
+  10. [Formatting](#formatting)
+  11. [Comments](#comments)
 
-# Introdução
-![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
+# Introduction
+![Humorous image of software quality estimation based on counting how many swear words you shouted while reading the code.](http://www.osnews.com/images/comics/wtfm.jpg)
 
-Princípios de Engenharia de Software, do livro de Robert C. Martin [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adaptados para Swift. Este não é um guia de estilo. É um guia para produzir código [legível, reutilizável e passível de refatoração](https://github.com/ryanmcdermott/3rs-of-software-architecture) em Swift.
+Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/ryanmcdermott/3rs-of-software-architecture) in Swift.
 
-Não é necessário seguir rigorosamente todos os princípios demonstrados, e ainda menos eles são um consenso universal. Esses princípios são diretrizes e nada mais, contudo, foram codificados ao longo de muitos anos de experiência coletiva pelos autores de *Clean Code*.
+It is not necessary to strictly follow all the principles demonstrated, and even less are they a universal consensus. These principles are guidelines and nothing more, however, they have been codified over many years of collective experience by the authors of *Clean Code*.
 
-A engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão antiga quanto a própria arquitetura, talvez tenhamos regras mais rígidas para seguir. Por enquanto, deixe que essas diretrizes sirvam como critério para avaliar a qualidade do código Swift que você e sua equipe produzem.
+Software engineering is just over 50 years old, and we are still learning a lot. When software architecture is as old as architecture itself, we may have stricter rules to follow. For now, let these guidelines serve as a criterion for evaluating the quality of Swift code that you and your team produce.
 
-Mais uma coisa: aprender isso não irá transformá-lo imediatamente em um desenvolvedor de software melhor, e trabalhar com esses princípios por muitos anos não garante que você não cometerá erros. Cada porção de código começa como um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições ao revisar com nossos colegas. Não se sinta culpado pelos primeiros rascunhos que ainda precisam de melhorias. Em vez disso, concentre-se em aprimorar seu código.
+One more thing: learning this will not immediately turn you into a better software developer, and working with these principles for many years does not guarantee that you will not make mistakes. Each portion of code starts as a draft, like wet clay being shaped into its final form. Finally, we carve out imperfections by reviewing with our peers. Don't feel guilty about the first drafts that still need improvement. Instead, focus on refining your code.
 
-# Variáveis
-### Use nomes de variáveis que tenham significado e sejam pronunciáveis
+# Variables
+### Use meaningful and pronounceable variable names
 
-**Ruim:**
+**Bad:**
 ```swift
 let currentDateStr = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let currentDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Use o mesmo vocabulário para o mesmo tipo de variável
+### Use the same vocabulary for the same type of variable
 
-**Ruim:**
+**Bad:**
 ```swift
 getUserInfo()
 getClientData()
 getCustomerRecord()
 ```
 
-**Bom:**
+**Good:**
 ```swift
 getUser()
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Use nomes pesquisáveis
-Nós iremos ler mais código que escrever. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis.
+### Use searchable names
+We will read more code than we write. It is important that the code we write is readable and searchable. *Not* giving meaningful names to variables that are significant for understanding our program hurts our readers. Make your names searchable.
 
-**Ruim:**
+**Bad:**
 ```swift
-// Para que diabos serve 86400000?
+// What the heck does 86400000 stand for?
 setTimeout(blastOff, 86400000)
 ```
 
-**Bom:**
+**Good:**
 ```swift
-// Declare-as como `let` ou `var` em letras maiúsculas.
+// Declare them as `let` or `var` in uppercase letters.
 let millisecondsPerDay = 86400000
 
 setTimeout(blastOff, millisecondsPerDay)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Use variáveis explicativas
-**Ruim:**
+### Use explanatory variables
+**Bad:**
 ```swift
 let address = "One Infinite Loop, Cupertino 95014"
 let cityZipCodeRegex = try! NSRegularExpression(pattern: "^[^,\\]+[,\\\\\\s]+(.+?)\\s*(\\d{5})?$")
 saveCityZipCode(address.match(cityZipCodeRegex)![1], address.match(cityZipCodeRegex)![2])
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let address = "One Infinite Loop, Cupertino 95014"
 let cityZipCodeRegex = try! NSRegularExpression(pattern: "^[^,\\]+[,\\\\\\s]+(.+?)\\s*(\\d{5})?$")
@@ -93,12 +93,12 @@ if let match = cityZipCodeRegex.firstMatch(in: address) {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Evite Mapeamento Mental
-Explicito é melhor que implícito.
+### Avoid Mental Mapping
+Explicit is better than implicit.
 
-**Ruim:**
+**Bad:**
 ```swift
 let locations = ["Austin", "New York", "San Francisco"]
 locations.forEach({ l in
@@ -107,12 +107,12 @@ locations.forEach({ l in
     // ...
     // ...
     // ...
-    // Espera, para que serve o `l` mesmo?
+    // Wait, what's `l` for again?
     dispatch(l)
 })
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let locations = ["Austin", "New York", "San Francisco"]
 locations.forEach({ location in
@@ -125,12 +125,12 @@ locations.forEach({ location in
 })
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Não adicione contextos desnecessários
-Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repita nos nomes de suas variáveis.
+### Avoid unnecessary context
+If your class/object name already tells you something, don't repeat it in your variable names.
 
-**Ruim:**
+**Bad:**
 ```swift
 let car = [
     "carMake": "Honda",
@@ -143,7 +143,7 @@ func paintCar(car: [String: String], color: String) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let car = [
     "make": "Honda",
@@ -156,28 +156,28 @@ func paintCar(car: [String: String], color: String) {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-# Funções
+# Functions
 
-### Argumentos de funções (idealmente 2 ou menos)
+### Function arguments (ideally 2 or fewer)
 
-O cuidado na gestão de parâmetros em funções desempenha um papel crucial na facilitação dos testes e na manutenção do código, seguindo os princípios SOLID. Quando uma função possui mais de três argumentos, a complexidade cresce exponencialmente, exigindo testes detalhados para cada parâmetro separadamente.
+Careful management of parameters in functions plays a crucial role in facilitating testing and maintaining code, following SOLID principles. When a function has more than three arguments, complexity grows exponentially, requiring detailed tests for each parameter separately.
 
-O ideal é manter no máximo dois argumentos, evitando três sempre que possível. Se a função exigir mais parâmetros, uma alternativa é consolidá-los em um objeto. Uma função com mais de dois argumentos geralmente tenta abranger diversas responsabilidades, sinalizando a necessidade de reavaliação. Em muitos casos, a passagem de um objeto como argumento é suficiente.
+The ideal is to keep a maximum of two arguments, avoiding three whenever possible. If the function requires more parameters, an alternative is to consolidate them into an object. A function with more than two arguments often tries to cover multiple responsibilities, signaling the need for reassessment. In many cases, passing an object as an argument is sufficient.
 
-Considerando a capacidade do Swift de criar objetos de maneira eficiente, o uso de objetos ao lidar com múltiplos argumentos é uma prática eficaz.
+Considering Swift's ability to efficiently create objects, using objects when dealing with multiple arguments is an effective practice.
 
-**[⬆ Voltar ao Topo](#Índice)**
+**[⬆ Back to Top](#index)**
 
-**Ruim:**
+**Bad:**
 ```swift
 func createMenu(title: String, body: String, buttonText: String, cancellable: Bool) {
   // ...
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 struct MenuViewData {
   let title: String
@@ -190,7 +190,7 @@ func createMenu(viewData: MenuViewData) {
   // ...
 }
 
-// Uso:
+// Usage:
 let viewData = .init(
   title: "Foo", 
   body: "Bar", 
@@ -201,13 +201,13 @@ let viewData = .init(
 createMenu(viewData: viewData)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
+**Use default arguments instead of short-circuiting or using conditionals**
 
-Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituídos por valores padrões.
+Default arguments are generally cleaner than short-circuits. Be aware that if you use them, your function will only provide default values for `undefined` arguments. Other "falsy" values like `''`, `""`, `false`, `nil` and `0` will not be replaced by default values.
 
-**Ruim:**
+**Bad:**
 ```swift
 func createMicrobrewery(name: String?) {
   let breweryName = name ?? "Hipster Brew Co."
@@ -215,19 +215,19 @@ func createMicrobrewery(name: String?) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func createMicrobrewery(breweryName: String = "Hipster Brew Co.") {
   // ...
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Funções devem fazer uma coisa
-Essa é de longe a regra mais importante em engenharia de software. Quando funções fazem mais que uma coisa, elas se tornam difíceis de serem compostas, testadas e raciocinadas. Quando você pode isolar uma função para realizar apenas uma ação, elas podem ser refatoradas facilmente e seu código ficará muito mais limpo. Se você não levar mais nada desse guia além disso, você já estará na frente de muitos desenvolvedores.
+### Functions should do one thing
+This is by far the most important rule in software engineering. When functions do more than one thing, they become difficult to compose, test, and reason about. When you can isolate a function to just do one action, they can be refactored easily, and your code will be much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
 
-**Ruim:**
+**Bad:**
 ```swift
 func emailClients(clients: [Client]) {
   clients.forEach { client in
@@ -239,7 +239,7 @@ func emailClients(clients: [Client]) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func emailActiveClients(clients: [Client]) {
   clients
@@ -253,11 +253,11 @@ func isActiveClient(client: Client) -> Bool {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Nomes de funções devem dizer o que elas fazem
+### Function names should say what they do
 
-**Ruim:**
+**Bad:**
 ```swift
 func addToDate(date: Date, month: Int) {
   // ...
@@ -265,11 +265,11 @@ func addToDate(date: Date, month: Int) {
 
 let date = Date()
 
-// É difícil dizer pelo nome da função o que é adicionado
+// It's hard to tell by the function name what is being added
 addToDate(date: date, month: 1)
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func addMonthToDate(month: Int, date: Date) {
   // ...
@@ -279,12 +279,12 @@ let date = Date()
 addMonthToDate(month: 1, date: date)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Funções devem ter apenas um nível de abstração
-Quando você tem mais de um nível de abstração, sua função geralmente está fazendo coisas demais. Dividir suas funções leva a uma melhor reusabilidade e testabilidade.
+### Functions should have one level of abstraction
+When you have more than one level of abstraction, your function is usually doing too much. Splitting your functions leads to better reusability and testability.
 
-**Ruim:**
+**Bad:**
 ```swift
 func parseInput(input: String) {
   // ...
@@ -299,7 +299,7 @@ func saveData(data: Data) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func parseInput(input: String) {
   // ...
@@ -313,20 +313,20 @@ func saveData(data: Data) {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Remova código duplicado
-Faça o melhor para evitar código duplicado. Código duplicado é ruim porque significa que há mais do que um lugar para se mudar alguma coisa se você precisar fazer uma mudança.
+### Remove duplicated code
+Do your best to avoid duplicated code. Duplicated code is bad because it means there's more than one place to change something if you need to make a change.
 
-Imagine se você tem um restaurante e mantém uma lista de todos os seus clientes em dois lugares: um no qual você mantém a ordem deles para o chef e outro no qual você mantém a ordem deles para a entrega. Se você tiver clientes que cancelam, você agora tem que o fazer em dois lugares. Se você só tiver uma lista, há apenas um lugar para se atualizar!
+Imagine if you run a restaurant and you keep a list of all your clients in two places: one where you keep the order for the chef and another where you keep the order for the delivery. If you have clients that cancel, now you have to cancel in two places. If you only have one list, there's only one place to update!
 
-O que acontece se você esquecer de atualizar em um lugar e não no outro? E se o pedido de entrega chegar enquanto o chef estiver fazendo outra coisa e ele não tiver visto o pedido? Agora você tem um problema.
+What if you forget to update in one place and not the other? What if the delivery guy shows up while the chef is making something and he hasn't seen the cancellation? Now you have a problem.
 
-Muitas vezes, você tem código duplicado porque você tem duas ou mais coisas ligeiramente diferentes, que compartilham muitas coisas em comum, mas suas diferenças os forçam a ter dois ou mais métodos que fazem coisas muito similares. Remover o código duplicado significa criar uma abstração que pode lidar com essas diferenças com apenas uma função/método.
+Often, you have duplicated code because you have two or more slightly different things, that share a lot in common but their differences force you to have two or more separate methods that do much of the same things. Removing duplicated code means creating an abstraction that can handle those differences with only one function/method.
 
-Fazendo isso, você agora tem apenas um lugar para atualizar se algo mudar.
+By doing this, you now have only one place to update if something changes.
 
-**Ruim:**
+**Bad:**
 ```swift
 func showDeveloper(name: String) {
   print("Developer: \(name)")
@@ -339,7 +339,7 @@ func showManager(name: String) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func showPerson(name: String, role: String) {
   print("\(role): \(name)")
@@ -351,14 +351,14 @@ func showPerson(name: String, role: String) {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Use Objetos Puros
-Objetos são ditos serem puros quando eles não compartilham estado com outros objetos. Imagine que você está no espaço sideral e você tem uma nave espacial. Esta nave espacial tem um tanque de combustível. Imagine que existem vários sistemas diferentes na nave espacial que podem modificar esse tanque de combustível.
+### Use Pure Objects
+Objects are said to be pure when they don't share state with other objects. Imagine you're in outer space and you have a spaceship. This spaceship has a fuel tank. Imagine there are various different systems in the spaceship that can modify this fuel tank.
 
-Existem três tipos diferentes de objetos aqui:
+There are three different types of objects here:
 
-1. **Objeto Impuro:**
+1. **Impure Object:**
 ```swift
 class Spaceship {
   var fuelTank: Int
@@ -377,7 +377,7 @@ class Spaceship {
 }
 ```
 
-2. **Objeto Menos Puro:**
+2. **Less Pure Object:**
 ```swift
 class Spaceship {
   var fuelTank: Int
@@ -404,7 +404,7 @@ class SpaceStation {
 }
 ```
 
-3. **Objeto Puro:**
+3. **Pure Object:**
 ```swift
 class Spaceship {
   var fuelTank: Int
@@ -423,14 +423,13 @@ class Spaceship {
 }
 ```
 
-Por que objetos puros são preferíveis? Eles são mais fáceis de testar e entender. Eles não podem ser mudados por outros sistemas enquanto estão sendo usados. Dados que são passados para eles podem ser confiáveis, e eles não têm efeitos colaterais que podem causar bugs difíceis de rastrear.
+Why are pure objects preferable? They are easier to test and understand. They cannot be changed by other systems while they are being used. Data passed to them can be trusted, and they have no side effects that can cause difficult-to-trace bugs.
 
+**[⬆ back to top](#index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Make decisions based on an object
 
-### Faça decisões que sejam baseadas em um objeto
-
-**Ruim:**
+**Bad:**
 ```swift
 if car.engine == "v8" {
   // ...
@@ -438,10 +437,12 @@ if car.engine == "v8" {
 
 if bike.tires == "fat" {
   // ...
+
+
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class Engine {
   var type: String
@@ -460,46 +461,46 @@ if bike.tires.type == "fat" {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#index)**
 
-### Evite o uso de flags como parâmetros de função
-Funções que têm sinalizadores booleanos como parâmetros são mais difíceis de entender do que funções que fazem apenas uma coisa. Sinalizadores indicam que a função faz mais de uma coisa. Separe essas funções em várias funções se for o caso.
+### Avoid Using Flags as Function Parameters
+Functions that have boolean flags as parameters are harder to understand than functions that do only one thing. Flags indicate that the function does more than one thing. Separate these functions into multiple functions if necessary.
 
-**Ruim:**
+**Bad:**
 ```swift
 func createFile(name: String, temporary: Bool) {
   if temporary {
-    // Cria um arquivo temporário
+    // Creates a temporary file
   } else {
-    // Cria um arquivo permanente
+    // Creates a permanent file
   }
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func createTemporaryFile(name: String) {
-  // Cria um arquivo temporário
+  // Creates a temporary file
 }
 
 func createPermanentFile(name: String) {
-  // Cria um arquivo permanente
+  // Creates a permanent file
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Evite Efeitos Colaterais (parte 1)
-Uma função produz um efeito colateral se ela faz alguma coisa que não seja receber um valor de entrada e retornar outro(s) valor(es). Um efeito colateral pode ser escrever em um arquivo, modificar uma variável global, ou acidentalmente transferir todo seu dinheiro para um estranho.
+### Avoid Side Effects (Part 1)
+A function produces a side effect if it does something other than taking an input value and returning another value(s). A side effect can be writing to a file, modifying a global variable, or accidentally transferring all your money to a stranger.
 
-Agora, você precisa de efeitos colaterais ocasionalmente no seu programa. Como no exemplo anterior, você pode precisar escrever em um arquivo. O que você quer fazer é centralizar aonde está fazendo isto. Não tenha diversas funções e classes que escrevam para um arquivo em particular. Tenha um serviço que faça isso. Um e apenas um.
+Now, you need side effects occasionally in your program. Like in the previous example, you might need to write to a file. What you want to do is to centralize where you are doing this. Don't have multiple functions and classes that write to a particular file. Have one service that does it. One and only one.
 
-O ponto principal é evitar armadilhas como compartilhar o estado entre objetos sem nenhuma estrutura, usando tipos de dados mutáveis que podem ser escritos por qualquer coisa, e não centralizando onde seu efeito colateral acontece. Se você conseguir fazer isto, você será muito mais feliz que a grande maioria dos outros programadores.
+The main point is to avoid pitfalls like sharing state between objects with no structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be much happier than the vast majority of other programmers.
 
-**Ruim:**
+**Bad:**
 ```swift
-// Variável global referenciada pela função seguinte
-// Se tivéssemos outra função que usa esse nome, então seria um vetor (array) e poderia quebrar seu código
+// Global variable referenced by the following function
+// If we had another function that uses this name, then it would be an array and could break your code
 var name = "Matheus Gois"
 
 func splitIntoFirstAndLastName() {
@@ -511,7 +512,7 @@ splitIntoFirstAndLastName()
 print(name) // 'Matheus Gois'
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func splitIntoFirstAndLastName(name: String) -> (firstName: String, lastName: String) {
   let components = name.split(separator: " ").map { String($0) }
@@ -531,23 +532,21 @@ print(nameComponents.firstName) // 'Ryan'
 print(nameComponents.lastName) // 'McDermott'
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Avoid Side Effects (Part 2)
+In Swift, primitive types are passed by value, and objects/arrays are passed by reference. In the case of objects and arrays, if your function makes a change to a shopping cart array, for example, by adding an item to be purchased, then any other function that uses the `cart` array will also be affected by this addition. This can be great, but it can also be bad. Let's imagine a bad situation:
 
-### Evite Efeitos Colaterais (parte 2)
-Em Swift, tipos primitivos são passados por valor e objetos/vetores são passados por referência. No caso de objetos e vetores, se sua função faz uma mudança em um vetor de um carrinho de compras, por exemplo, adicionando um item para ser comprado, então qualquer outra função que use o vetor `cart` também será afetada por essa adição. Isso pode ser ótimo, mas também pode ser ruim. Vamos imaginar uma situação ruim:
+The user clicks the "Buy" button, which invokes the `purchase` function that sends a series of requests and sends the `cart` array to the server. Due to a poor internet connection, the `purchase` function needs to resend the request. Now, imagine that in the meantime, the user accidentally clicks the `Add to Cart` button on a product he didn't want before the request started. If this happens and the request is sent again, then the `purchase` function will accidentally send the array with the new product added because there is a reference to the `cart` array that the `addItemToCart` function modified by adding an unwanted product.
 
-O usuário clica no botão "Comprar", botão que invoca a função `purchase` que dispara uma série de requisições e manda o vetor `cart` para o servidor. Devido a uma conexão ruim de internet, a função `purchase` precisa fazer novamente a requisição. Agora, imagine que nesse meio tempo o usuário acidentalmente clique no botão `Adicionar ao carrinho` em um produto que ele não queria antes da requisição começar. Se isto acontecer e a requisição for enviada novamente, então a função `purchase` irá enviar acidentalmente o vetor com o novo produto adicionado porque existe uma referência para o vetor `cart` que a função `addItemToCart` modificou adicionando um produto indesejado.
+A great solution would be for the `addItemToCart` function to always clone the `cart` array, edit it, and then return its clone. This ensures that no other function that has a reference to the shopping cart is affected by any changes made.
 
-Uma ótima solução seria que a função `addCartToItem` sempre clonasse o vetor `cart`, editasse-o, e então retornasse seu clone. Isso garante que nenhuma outra função que possua uma referência para o carrinho de compras seja afetada por qualquer mudança feita.
+Two caveats of this approach:
 
-Duas ressalvas desta abordagem:
+1. There may be cases where you really want to change the input object, but when you adopt this kind of programming, you will find that these cases are quite rare. Most things can be refactored to avoid side effects.
+2. Cloning large objects can be quite expensive in terms of performance. Luckily, in practice, this is not a problem because there are [great libraries](https://github.com/apple/swift-collections) that allow this type of programming to be fast and not as memory-intensive as it would be if you manually cloned objects and arrays.
 
-  1. Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação, você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não terem efeitos colaterais.
-
-  2. Clonar objetos grandes pode ser bastante caro em termos de desempenho. Com sorte, na prática isso não é um problema, porque existem [ótimas bibliotecas](https://github.com/apple/swift-collections) que permitem que este tipo de programação seja rápida e não seja tão intensa no uso de memória quanto seria se você clonasse manualmente objetos e vetores.
-
-**Ruim:**
+**Bad:**
 ```swift
 var cart = [
   CartItem(item: "Widget", date: Date()),
@@ -559,7 +558,7 @@ func addItemToCart(item: CartItem) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func addItemToCart(cart: [CartItem], item: CartItem) -> [CartItem] {
   var updatedCart = cart
@@ -568,10 +567,10 @@ func addItemToCart(cart: [CartItem], item: CartItem) -> [CartItem] {
 }
 ```
 
-### Não escreva em funções globais
-Poluir globais é uma prática ruim em Swift porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do Swift para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor?
+### Do Not Write to Global Functions
+Polluting globals is a bad practice in Swift because you can conflict with another library, and the user of your API would have no idea until they got an exception thrown in production. Let's think about an example: what if you wanted to extend the native Swift Array method to have a `diff` method that could show the difference between two arrays? You could write your new function on `Array.prototype`, but it could collide with another library that tried to do the same thing. And what if this other library was just using `diff` to find the difference between the first and last element of an array?
 
-**Ruim:**
+**Bad:**
 ```swift
 extension Array {
   func diff(_ comparisonArray: [Element]) -> [Element] {
@@ -581,7 +580,7 @@ extension Array {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class ExtendedArray<Element>: Array<Element> {
   func diff(_ comparisonArray: [Element]) -> [Element] {
@@ -591,13 +590,12 @@ class ExtendedArray<Element>: Array<Element> {
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Favor Functional Programming over Imperative Programming
+Swift is not a functional language in the same way Haskell is, but it has a touch of functional in it. Functional languages are cleaner and easier to test. Favor this type of programming when you can.
 
-### Favoreça programação funcional sobre programação imperativa
-Swift não é uma linguagem funcional da mesma forma que Haskell é, mas tem um toque de funcional em si. Linguagens funcionais são mais limpas e fáceis de se testar. Favoreça esse tipo de programação quando puder.
-
-**Ruim:**
+**Bad:**
 ```swift
 let programmerOutput = [
   Programmer(name: "Uncle Bobby", linesOfCode: 500),
@@ -613,9 +611,11 @@ for programmer in programmerOutput {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
-let programmerOutput = [
+let programmerOutput
+
+ = [
   Programmer(name: "Uncle Bobby", linesOfCode: 500),
   Programmer(name: "Suzie Q", linesOfCode: 1500),
   Programmer(name: "Jimmy Gosling", linesOfCode: 150),
@@ -627,18 +627,18 @@ let totalOutput = programmerOutput
   .reduce(0, +)
 ```
 
-**[⬆ volta ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Encapsule condicionais
+### Encapsulate Conditionals
 
-**Ruim:**
+**Bad:**
 ```swift
 if fsm.state == "fetching" && isEmpty(listNode) {
   // ...
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func shouldShowSpinner(fsm: FSM, listNode: Node) -> Bool {
   return fsm.state == "fetching" && isEmpty(listNode)
@@ -649,40 +649,38 @@ if shouldShowSpinner(fsm: fsmInstance, listNode: listNodeInstance) {
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Avoid Negations in Conditionals
 
-### Evite negações de condicionais
-
-**Ruim:**
+**Bad:**
 ```swift
-func isDOMNodeNotPresent(node: Node) -> Bool {
+func isViewNotPresent(view: UIView) -> Bool {
   // ...
 }
 
-if !isDOMNodeNotPresent(node: node) {
+if !isViewNotPresent(view: view) {
   // ...
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
-func isDOMNodePresent(node: Node) -> Bool {
+func isViewPresent(view: UIView) -> Bool {
   // ...
 }
 
-if isDOMNodePresent(node: node) {
+if isViewPresent(view: view) {
   // ...
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Avoid Conditionals
+This seems like an impossible task. The first time people hear this, they say, "How am I supposed to do anything without using `if`?" The answer is that you can use polymorphism to achieve the same task in different cases. The second question is usually, "Well, that's great, but why would I do that?" The answer is a previously learned clean code concept: a function should do only one thing. When you have classes and functions that have `if` statements, you're telling your user that your function does more than one thing. Remember, do one thing.
 
-### Evite condicionais
-Esta parece ser uma tarefa impossível. Da primeira vez que as pessoas escutam isso, a maioria diz, “como eu supostamente faria alguma coisa sem usar `if`? ” A resposta é que você pode usar polimorfismo para realizar a mesma tarefa em diversos casos. A segunda questão é geralmente, “bom, isso é ótimo, mas porque eu deveria fazer isso?” A resposta é um conceito de código limpo aprendido previamente: uma função deve fazer apenas uma coisa. Quando você tem classes e funções que tem declarações `if`, você esta dizendo para seu usuário que sua função faz mais de uma coisa. Relembre-se, apenas uma coisa.
-
-**Ruim:**
+**Bad:**
 ```swift
 class Airplane {
   // ...
@@ -701,7 +699,7 @@ class Airplane {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class Airplane {
   // ...
@@ -729,13 +727,12 @@ class Cessna: Airplane {
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Avoid Type Checking (Part 1)
+Swift does not have types, which means your functions can take any type of argument. Sometimes this freedom can bite you, and it becomes tempting to do type checking in your functions. There are many ways to avoid having to do this. The first thing to consider is consistent APIs.
 
-### Evite checagem de tipos (parte 1)
-Swift não possui tipos, o que significa que suas funções podem receber qualquer tipo de argumento. Algumas vezes esta liberdade pode te morder, e se torna tentador fazer checagem de tipos em suas funções. Existem muitas formas de evitar ter que fazer isso. A primeira coisa a se considerar são APIs consistentes.
-
-**Ruim:**
+**Bad:**
 ```swift
 func travelToTexas(vehicle: Any) {
   if let bicycle = vehicle as? Bicycle {
@@ -746,20 +743,19 @@ func travelToTexas(vehicle: Any) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func travelToTexas(vehicle: Vehicle) {
   vehicle.move(currentLocation: self.currentLocation, newLocation: Location("texas"))
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Avoid Type Checking (Part 2)
+If you are working with basic primitive values like strings and integers, and you cannot use polymorphism, but still feel the need to check the type, you should consider using TypeScript. It is an excellent alternative to regular Swift, as it provides static typing on top of Swift's standard syntax. The problem with manual checking in Swift is that to do it well requires so much extra verbosity that the false "type safety" you get doesn't compensate for the loss of readability. Keep your Swift clean, write good tests, and have good code reviews. Or alternatively, do all of that but with TypeScript (which, as I mentioned, is a great alternative!).
 
-### Evite checagem de tipos (parte 2)
-Se você estiver trabalhando com valores primitivos básicos como strings e inteiros, e você não pode usar polimorfismo, mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o Swift normal, já que fornece uma tipagem estática sobre a sintaxe padrão do Swift. O problema com checagem manual em Swift é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu Swift limpo, escreva bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso, mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
-
-**Ruim:**
+**Bad:**
 ```swift
 func combine(val1: Any, val2: Any) -> String {
   if let number1 = val1 as? Int, let number2 = val2 as? Int {
@@ -772,20 +768,19 @@ func combine(val1: Any, val2: Any) -> String {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func combine(val1: Any, val2: Any) -> String {
   return String(describing: val1) + String(describing: val2)
 }
 ```
 
+**[⬆ Back to Top](#Index)**
 
-**[⬆ voltar ao topo](#Índice)**
+### Remove Dead Code
+Dead code is as bad as duplicate code. There is no reason to keep it in your codebase. If it's not being called, get rid of it. It will still be safe in your version history if you ever need it.
 
-### Remova código morto
-Código morto é tão ruim quanto código duplicado. Não existe nenhum motivo para deixá-lo em seu código. Se ele não estiver sendo chamado, livre-se dele. Ele ainda estará a salvo no seu histórico de versionamento se ainda precisar dele.
-
-**Ruim:**
+**Bad:**
 ```swift
 func oldRequestModule(url: String) {
   // ...
@@ -799,7 +794,7 @@ let req = newRequestModule
 inventoryTracker(item: "apples", requestModule: req, url: "www.inventory-awesome.io")
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func newRequestModule(url: String) {
   // ...
@@ -809,19 +804,19 @@ let req = newRequestModule
 inventoryTracker(item: "apples", requestModule: req, url: "www.inventory-awesome.io")
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-# Objetos e Estruturas de Dados
-### Use getters e setters
-Usar getters e setters para acessar dados em objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
+# Objects and Data Structures
+### Use Getters and Setters
+Using getters and setters to access data in objects is much better than simply looking for a property on an object. "Why?" you might ask. Well, here's an unordered list of reasons:
 
-* Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do seu código
-* Torna mais fácil fazer validação quando estiver dando um `set`
-* Encapsula a representação interna
-* Mais fácil de adicionar logs e tratamento de erros quando dando get and set
-* Você pode usar lazy loading nas propriedades de seu objeto, digamos, por exemplo, pegando ele de um servidor.
+* When you want to do more than get a property of an object, you don't have to search and change all the accessors in your code.
+* Makes it easier to do validation when setting.
+* Encapsulates the internal representation.
+* Easier to add logging and error handling when getting and setting.
+* You can use lazy loading on your object's properties, for example, fetching it from a server.
 
-**Ruim:**
+**Bad:**
 ```swift
 func makeBankAccount() -> [String: Any] {
   // ...
@@ -833,21 +828,23 @@ func makeBankAccount() -> [String: Any] {
 }
 
 let account = makeBankAccount()
-account["balance"] = 100
+account
+
+["balance"] = 100
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func makeBankAccount() -> BankAccount {
-  // este é privado
+  // This is private
   var balance = 0
 
-  // um "getter", feito público através do objeto retornado abaixo
+  // A getter, made public through the returned object below
   func getBalance() -> Int {
     return balance
   }
 
-  // um "setter", feito público através do objeto retornado abaixo
+  // A setter, made public through the returned object below
   func setBalance(amount: Int) {
     // ... validate before updating the balance
     balance = amount
@@ -860,12 +857,12 @@ let account = makeBankAccount()
 account.setBalance(100)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Faça objetos terem membros privados
-Isto pode ser alcançado através de closures (para ES5 e além).
+### Make Objects Have Private Members
+This can be achieved through closures (for ES5 and above).
 
-**Ruim:**
+**Bad:**
 ```swift
 class Employee {
   var name: String
@@ -885,7 +882,7 @@ employee.name = "Jane Doe"
 print("Employee name: \(employee.getName())") // Employee name: Jane Doe
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func makeEmployee(name: String) -> () -> String {
   var privateName = name
@@ -899,15 +896,15 @@ let employee = makeEmployee(name: "John Doe")
 print("Employee name: \(employee())") // Employee name: John Doe
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
 
 # Classes
 
-### Use encadeamento de métodos
-Este padrão é muito útil em Swift e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `self` no final de cada função, e você poderá encadear mais métodos de classe nele.
+### Method Chaining
+This pattern is very useful in Swift, and you'll find it in many libraries like jQuery and Lodash. It allows your code to be expressive and less verbose. For this reason, I say, use method chaining and see how your code becomes cleaner. In your class functions, just return `self` at the end of each function, and you can chain more class methods on it.
 
-**Ruim:**
+**Bad:**
 ```swift
 class Car {
   var make: String
@@ -944,7 +941,7 @@ let car = Car(make: "Ford", model: "F-150", color: "red")
 car.setColor("pink").save()
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class Car {
   private var make: String
@@ -982,18 +979,18 @@ let car = Car(make: "Ford", model: "F-150", color: "red")
 car.setColor("pink").save()
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Prefira composição ao invés de herança
-Como dito famosamente em [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Gangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razões para usar herança e muitas boas razões para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
+### Prefer Composition Over Inheritance
+As famously stated in the [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) book by the Gang of Four, you should prefer composition over inheritance where you can. There are many good reasons to use inheritance and many good reasons to use composition. The main point for this maxim is that if your mind instinctively goes for inheritance, try to think if composition could better model your problem. In some cases, it might.
 
-Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
+You might be wondering then, "when should I use inheritance?" It depends specifically on your problem, but this is a decent list of when inheritance makes more sense than composition:
 
-1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Human→Animal vs. User->UserDetails)
-2. Você pode reutilizar código de classes de base (Humanos podem se mover como todos os animais).
-3. Você quer fazer mudanças globais para classes derivadas mudando apenas a classe base. (Mudar o custo calórico para todos os animais quando se movem).
+1. Your inheritance represents an "is-a" relationship and not a "has-a" relationship (Human→Animal vs. User->UserDetails).
+2. You can reuse code from the base classes (Humans can move like all animals).
+3. You want to make global changes to derived classes by changing only the base class. (Changing the caloric cost for all animals when they move).
 
-**Ruim:**
+**Bad:**
 ```swift
 class Employee {
   var name: String
@@ -1007,7 +1004,7 @@ class Employee {
   // ...
 }
 
-// Ruim porque Employees (Empregados) "tem" dados de impostos. EmployeeTaxData não é um tipo de Employee
+// Bad because Employees "have" tax data. EmployeeTaxData is not a type of Employee
 class EmployeeTaxData: Employee {
   var ssn: String
   var salary: Double
@@ -1022,7 +1019,7 @@ class EmployeeTaxData: Employee {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class EmployeeTaxData {
   var ssn: String
@@ -1053,13 +1050,14 @@ class Employee {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
 # SOLID
-### Princípio da Responsabilidade Única (SRP)
-Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não será conceitualmente coesa e dar-lhe-á diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante, porque, se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outros módulos que dependem dela no seu código.
 
-**Ruim:**
+### Single Responsibility Principle (SRP)
+As stated in *Clean Code*, "There should never be more than one reason for a class to change." It's tempting to pack a class with many functionalities, like when you can only bring one suitcase on your flight. The problem with this is that your class will not be conceptually cohesive and will give it multiple reasons to change. Minimizing the number of times you need to change a class is important because if many functionalities are in one class and you change a portion of it, it can be difficult to understand how it will affect other modules that depend on it in your code.
+
+**Bad:**
 ```swift
 class UserSettings {
   var user: User
@@ -1080,7 +1078,7 @@ class UserSettings {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class UserAuth {
   var user: User
@@ -1111,24 +1109,24 @@ class UserSettings {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Princípio do Aberto/Fechado (OCP)
-Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse princípio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar código já existente.
+### Open/Closed Principle (OCP)
+As stated by Bertrand Meyer, "Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification." But what does that mean? This principle basically says that you should allow users to add new functionalities without changing existing code.
 
-**Ruim:**
+**Bad:**
 ```swift
-class AjaxAdapter: Adapter {
+class SwiftAdapter: Adapter {
   override init() {
     super.init()
-    self.name = "ajaxAdapter"
+    self.name = "SwiftAdapter"
   }
 }
 
-class NodeAdapter: Adapter {
+class ObjcAdapter: Adapter {
   override init() {
     super.init()
-    self.name = "nodeAdapter"
+    self.name = "ObjcAdapter"
   }
 }
 
@@ -1140,49 +1138,51 @@ class HttpRequester {
   }
 
   func fetch(url: String) -> Promise<Response> {
-    if self.adapter.name == "ajaxAdapter" {
-      return makeAjaxCall(url: url).then { response in
-        // transforma a resposta e retorna
+    if self.adapter.name == "SwiftAdapter" {
+      return makeSwiftCall(url: url).then { response in
+        // transform the response and return
       }
-    } else if self.adapter.name == "httpNodeAdapter" {
-      return makeHttpCall(url: url).then { response in
-        // transforma a resposta e retorna
+    } else if self.adapter.name == "httpObjcAdapter" {
+      return make
+
+HttpCall(url: url).then { response in
+        // transform the response and return
       }
     }
-    fatalError("Adapter não suportado")
+    fatalError("Adapter not supported")
   }
 }
 
-func makeAjaxCall(url: String) -> Promise<Response> {
-  // faz a request e retorna a promessa
+func makeSwiftCall(url: String) -> Promise<Response> {
+  // make the request and return the promise
 }
 
 func makeHttpCall(url: String) -> Promise<Response> {
-  // faz a request e retorna a promessa
+  // make the request and return the promise
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
-class AjaxAdapter: Adapter {
+class SwiftAdapter: Adapter {
   override init() {
     super.init()
-    self.name = "ajaxAdapter"
+    self.name = "SwiftAdapter"
   }
 
   func request(url: String) -> Promise<Response> {
-    // faz a request e retorna a promessa
+    // make the request and return the promise
   }
 }
 
-class NodeAdapter: Adapter {
+class ObjcAdapter: Adapter {
   override init() {
     super.init()
-    self.name = "nodeAdapter"
+    self.name = "ObjcAdapter"
   }
 
   func request(url: String) -> Promise<Response> {
-    // faz a request e retorna a promessa
+    // make the request and return the promise
   }
 }
 
@@ -1195,21 +1195,20 @@ class HttpRequester {
 
   func fetch(url: String) -> Promise<Response> {
     return self.adapter.request(url: url).then { response in
-      // transforma a resposta e retorna
+      // transform the response and return
     }
   }
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
+### Liskov Substitution Principle (LSP)
+This is a scary term for a very simple concept. It's formally defined as "If S is a subtype of T, then objects of type T may be replaced with objects of type S (i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of a program (correctness, task performance, etc.)." That's an even scarier definition.
 
-### Princípio de Substituição de Liskov (LSP)
-Esse é um termo assustador para um conceito extremamente simples. É formalmente definido como “Se S é um subtipo de T, então objetos do tipo T podem ser substituídos por objetos com o tipo S (i.e., objetos do tipo S podem substituir objetos do tipo T) sem alterar nenhuma das propriedades desejáveis de um programa (corretude, desempenho em tarefas, etc.).” Esta é uma definição ainda mais assustadora.
+The best explanation for this concept is if you have a parent class and a child class, then the base class and the child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's look at the classic example of the Square-Rectangle problem. Mathematically, a square is a rectangle, but if you model it using an "is-a" relationship through inheritance, you quickly run into problems.
 
-A melhor explicação para este conceito é se você tiver uma classe pai e uma classe filha, então a classe base e a classe filha pode ser usadas indistintamente sem ter resultados incorretos. Isso ainda pode ser confuso, então vamos dar uma olhada no exemplo clássico do Quadrado-Retângulo (Square-Rectangle). Matematicamente, um quadrado é um retângulo, mas se você modelá-lo usando uma relação “isto-é” através de herança, você rapidamente terá problemas.
-
-**Ruim:**
+**Bad:**
 ```swift
 class Rectangle {
   var width: Double
@@ -1257,7 +1256,7 @@ func renderLargeRectangles(rectangles: [Rectangle]) {
   rectangles.forEach { rectangle in
     rectangle.setWidth(width: 4)
     rectangle.setHeight(height: 5)
-    let area = rectangle.getArea() // RUIM: Retorna 25 para o Quadrado. Deveria ser 20.
+    let area = rectangle.getArea() // BAD: Returns 25 for the Square. Should be 20.
     rectangle.render(area: area)
   }
 }
@@ -1266,7 +1265,7 @@ let rectangles: [Rectangle] = [Rectangle(), Rectangle(), Square()]
 renderLargeRectangles(rectangles: rectangles)
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class Shape {
   func setColor(color: String) {
@@ -1315,18 +1314,16 @@ let shapes: [Shape] = [Rectangle(width: 4, height: 5), Rectangle(width: 4, heigh
 renderLargeShapes(shapes: shapes)
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Princípio da Segregação de Interface (ISP) com Protocolos
+### Interface Segregation Principle (ISP) with Protocols
+Although Swift doesn't adopt the traditional concept of interfaces, we can apply the Interface Segregation Principle (ISP) through protocols, leveraging Swift's flexibility.
 
-Embora Swift não adote o conceito tradicional de interfaces, podemos aplicar o Princípio da Segregação de Interface (ISP) por meio de protocolos, aproveitando a flexibilidade do Swift.
+ISP states that "Clients should not be forced to depend on interfaces they do not use." In Swift, where duck typing prevails, we can create protocols that represent segregated interfaces.
 
-O ISP declara que "Clientes não devem ser forçados a depender de interfaces que eles não usam." Em Swift, onde a tipagem pato (duck typing) prevalece, podemos criar protocolos que representam interfaces segregadas.
-
-**Exemplo Ruim:**
-
+**Bad:**
 ```swift
-// Protocolo único com muitos requisitos
+// Single protocol with many requirements
 protocol Styling {
     var font: UIFont { get }
     var backgroundColor: UIColor { get }
@@ -1335,7 +1332,7 @@ protocol Styling {
     func applyStyles()
 }
 
-// Implementação do protocolo
+// Protocol implementation
 class BadStylableView: Styling {
     var font: UIFont
     var backgroundColor: UIColor
@@ -1348,37 +1345,36 @@ class BadStylableView: Styling {
     }
 
     func applyStyles() {
-        // Aplicar estilos com base na configuração
+        // Apply styles based on configuration
     }
 }
 
-// Exemplo de uso
+// Example of usage
 let badView = BadStylableView(font: .systemFont(ofSize: 14), backgroundColor: .white, cornerRadius: 8)
 ```
 
-**Exemplo Bom:**
-
+**Good:**
 ```swift
-// Protocolo para configuração de estilo
+// Protocol for styling configuration
 protocol StyleConfigurable {
     var font: UIFont { get }
     var backgroundColor: UIColor { get }
     var cornerRadius: CGFloat { get }
 }
 
-// Protocolo para exibição de estilos
+// Protocol for applying styles
 protocol StyleApplicable {
     func applyStyles()
 }
 
-// Implementação padrão para configuração de estilo
+// Default implementation for styling configuration
 struct AppearanceConfig: StyleConfigurable {
     var font: UIFont
     var backgroundColor: UIColor
     var cornerRadius: CGFloat
 }
 
-// View que adota os protocolos
+// View adopting the protocols
 class GoodStylableView: StyleApplicable {
     var styleConfig: StyleConfigurable
 
@@ -1392,28 +1388,31 @@ class GoodStylableView: StyleApplicable {
     }
 
     func applyStyles() {
-        // Aplicar estilos com base na configuração
+        // Apply styles based on configuration
     }
 }
 
-// Exemplo de uso
+// Example of usage
 let goodView = GoodStylableView(styleConfig: AppearanceConfig(font: .systemFont(ofSize: 14)))
 ```
 
-No exemplo ruim, um único protocolo `Styling` contém muitos requisitos, forçando os clientes a implementarem métodos e propriedades que podem não ser necessários. No exemplo bom, utilizamos protocolos segregados (`StyleConfigurable` e `StyleApplicable`) para permitir uma implementação mais específica e flexível.
+In the bad example, a single `Styling` protocol contains many requirements, forcing clients to implement methods and properties that may not be necessary. In the good example, we use segregated protocols (`StyleConfigurable` and `StyleApplicable`) to allow for a more specific and flexible implementation.
 
-**[⬆ Voltar ao Topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-### Princípio da Inversão de Dependência (DIP)
-Este princípio nos diz duas coisas essenciais:
-1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
-2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
+### Dependency Inversion Principle (DIP)
+This principle tells us two essential things:
 
-Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularSwift, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande benefício é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
+1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
+2. Abstractions should not depend on details. Details should depend on abstractions.
 
-Como dito anteriormente, Swift não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer módulo de Request  para `InventoryTracker` terá um método `requestItems`:
+This might be
 
-**Ruim:**
+ hard to understand at first, but if you've worked with AngularSwift, you've seen an implementation of this principle in the form of Dependency Injection (DI). While they are not identical concepts, DIP does not allow high-level modules to know the details of their low-level modules but configures them. This can be achieved through DI. A significant benefit is that it reduces coupling between modules. Coupling is a very bad development pattern because it makes your code harder to refactor.
+
+As mentioned earlier, Swift doesn't have interfaces, so the abstractions needed are implicit contracts. That means the methods and classes that an object/class exposes to other objects/classes. In the example below, the implicit contract is that any Request module for `InventoryTracker` will have a `requestItems` method:
+
+**Bad:**
 ```swift
 class InventoryRequester {
   init() {
@@ -1432,8 +1431,8 @@ class InventoryTracker {
   init(items: [String]) {
     self.items = items
 
-    // Ruim: Nós criamos uma dependência numa implementação de request especifica.
-    // Nós deveríamos apenas ter requestItems dependendo de um método de request: `request`
+    // Bad: We created a dependency on a specific request implementation.
+    // We should only have requestItems depend on a request method: `request`
     self.requester = InventoryRequester()
   }
 
@@ -1448,7 +1447,7 @@ let inventoryTracker = InventoryTracker(items: ["apples", "bananas"])
 inventoryTracker.requestItems()
 ```
 
-**Bom:**
+**Good:**
 ```swift
 class InventoryTracker {
   var items: [String]
@@ -1482,22 +1481,22 @@ class InventoryRequesterV2: RequesterProtocol {
   }
 }
 
-// Construindo nossas dependências externamente e injetando-as, podemos facilmente
-// substituir nosso módulo de request por um novo mais chique que usa WebSockets
+// Building our dependencies externally and injecting them, we can easily
+// swap our request module for a new fancy one that uses WebSockets
 let inventoryTracker = InventoryTracker(items: ["apples", "bananas"], requester: InventoryRequesterV2())
 inventoryTracker.requestItems()
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-# Testes
-Testes são mais importantes que entregas. Se você não possui testes ou uma quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espírito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](https://www.sonarsource.com/products/sonarqube/).
+# Testing
+Tests are more critical than shipping. If you have no tests or an inadequate amount, then every time you ship code, you won't be sure if you didn't break anything. Deciding what constitutes an adequate amount is up to your team, but having 100% coverage (all statements and branches) is how you achieve very high confidence and peace of mind. This means that in addition to having a great testing framework, you also need to use a [good coverage tool](https://www.sonarsource.com/products/sonarqube/).
 
-Não existe desculpa para não escrever testes. Existem [diversos frameworks de testes em Swift ótimos](https://github.com/vsouza/awesome-ios#testing), então encontre um que seu time prefira. Quando você encontrar um que funciona para seu time, então tenha como objetivo sempre escrever testes para cada nova funcionalidade/módulo que você introduzir. Se seu método preferido for Desenvolvimento Orientado a Testes (TDD), isso é ótimo, mas o ponto principal é apenas ter certeza que você está alcançado suas metas de cobertura antes de lançar qualquer funcionalidade, ou refatorar uma já existente.
+There's no excuse for not writing tests. There are [many great testing frameworks for Swift](https://github.com/vsouza/awesome-ios#testing), so find one that your team prefers. When you find one that works for your team, then aim to always write tests for every new feature/module you introduce. If your preferred method is Test-Driven Development (TDD), that's great, but the main point is to ensure you are reaching your coverage goals before launching any feature or refactoring an existing one.
 
-### Um conceito por teste
+### One Concept per Test
 
-**Ruim:**
+**Bad:**
 ```swift
 import XCTest
 
@@ -1519,7 +1518,7 @@ class MakeMomentSwiftGreatAgainTests: XCTestCase {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 import XCTest
 
@@ -1545,14 +1544,14 @@ class MakeMomentSwiftGreatAgainTests: XCTestCase {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ Back to Top](#Index)**
 
-# Concorrência
-**[⬆ voltar ao topo](#Índice)**
-### Async/Await são ainda mais limpas que Promessas
- Depois do iOS 13 o Swift traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua lógica imperativamente sem usar `completions` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do Swift hoje!
+# Concurrency
+**[⬆ back to top](#Index)**
+### Async/Await is even cleaner than Promises
+After iOS 13, Swift introduces `async` and `await` that offer an even cleaner solution. All you need is a function prefixed with the `async` keyword, and then you can write your logic imperatively without using `completions` to chain your functions. Use this if you can take advantage of Swift's features today!
 
-**Ruim:**
+**Bad:**
 ```swift
 import Foundation
 
@@ -1573,7 +1572,7 @@ URLSession.shared.dataTask(with: url) { (data, response, error) in
 }.resume()
 ```
 
-**Bom:**
+**Good:**
 ```swift
 import Foundation
 
@@ -1594,24 +1593,16 @@ Task {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#Index)**
 
 
-# Tratamento de Erros
-`throw error` é uma coisa boa! Eles significam que o programa identificou
-com sucesso quando algo deu errado e está permitindo que você saiba parando
-a execução da função no processo atual, fechando o processo (em Swift), e
-notificando você no console com a pilha de processos.
+# Error Handling
+`throw error` is a good thing! They mean the program has successfully identified when something went wrong and is letting you know by halting the execution of the current function, unwinding the process (in Swift), and notifying you in the console with the process stack.
 
-### Não ignore erros capturados
-Não fazer nada com um erro capturado não te dá a habilidade de resolvê-lo ou
-reagir ao erro informado. Exibir um log no console(`print`) não é muito
-melhor porque muitas vezes ele pode ficar perdido entre um monte de outras
-coisas impressas no console. Se você envolver qualquer pedaço de código em um
-`do/catch` isso significa que você acredita que um erro pode ocorrer lá e então
-você deveria ter um plano, ou criar caminho de código para quando isso ocorrer.
+### Don't ignore caught errors
+Doing nothing with a caught error doesn't give you the ability to address it or react to the reported error. Just printing a log to the console (`print`) is not much better because it can often get lost among a bunch of other things printed to the console. If you wrap any piece of code in a `do/catch`, it means you believe an error might occur there and then you should have a plan, or create a code path for when it happens.
 
-**Ruim:**
+**Bad:**
 ```swift
 do {
     try funcThatMightThrow()
@@ -1620,29 +1611,29 @@ do {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 do {
     try funcThatMightThrow()
 } catch {
-    // Uma opção (mais chamativa que print):
+    // One option (more noticeable than print):
     print(error)
-    // Outra opção:
+    // Another option:
     notifyUserOfError(error)
-    // Outra opção:
+    // Another option:
     reportErrorToService(error)
-    // OU as três!
+    // OR all three!
 }
 ```
 
-# Formatação
+# Formatting
 
-A formatação é subjetiva. Como muitas das regras aqui, não há uma regra dura e rápida que você precise seguir. A principal ideia é NÃO discutir sobre formatação. Há ferramentas que automatizam esse processo; deixe-as lidar com isso. A maior parte do código Swift deve seguir o [Guia de Estilo da Swift](https://google.github.io/swift/) da Google.
+Formatting is subjective. Like many of the rules here, there's no hard and fast rule you need to follow. The main idea is NOT to argue about formatting. There are tools that automate this process; let them handle it. Most Swift code should follow the [Google Swift Style Guide](https://google.github.io/swift/).
 
-### Use espaços em vez de tabs
-Apesar da luta épica entre espaços e tabs, o importante é ser consistente. O Swift usa espaços e é uma prática comum em outros projetos de Swift. Faça o mesmo.
+### Use spaces instead of tabs
+Despite the epic struggle between spaces and tabs, the important thing is to be consistent. Swift uses spaces, and it's a common practice in other Swift projects. Do the same.
 
-**Ruim:**
+**Bad:**
 ```swift
 func bad() {
 ∙∙∙∙var name:String?
@@ -1652,7 +1643,7 @@ func bad() {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func good() {
     var name: String?
@@ -1662,10 +1653,10 @@ func good() {
 }
 ```
 
-### Use linhas em branco de maneira eficaz
-Separar blocos de código com linhas em branco pode tornar o código mais legível e organizado. No entanto, o excesso de linhas em branco pode ter o efeito oposto, criando uma sensação de fragmentação. Use linhas em branco com moderação.
+### Use blank lines effectively
+Separating code blocks with blank lines can make the code more readable and organized. However, excessive blank lines can have the opposite effect, creating a sense of fragmentation. Use blank lines sparingly.
 
-**Ruim:**
+**Bad:**
 ```swift
 func calculateTotalScore(score: Int) {
     
@@ -1682,7 +1673,7 @@ func calculateTotalScore(score: Int) {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func calculateTotalScore(score: Int) {
     var totalScore = 0
@@ -1695,104 +1686,106 @@ func calculateTotalScore(score: Int) {
 }
 ```
 
-### Limite o comprimento das linhas
-O comprimento recomendado de uma linha de código é de 80 caracteres. Isso garante que você não precise rolar horizontalmente para ler o código. É comum em muitos ambientes de desenvolvimento ter dois arquivos lado a lado. Tornar isso possível facilita a leitura do código.
+### Limit line length
+The recommended length for a code line is 80 characters. This ensures that you don't have to scroll horizontally to read the code. It's common in many development environments to have two files side by side. Making this possible makes reading the code easier.
 
-**Ruim:**
+**Bad:**
 ```swift
 let errorMessage = "This is a very long error message that exceeds the recommended line length of 80 characters and makes the code harder to read."
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let errorMessage = "This is a short error message."
 ```
 
-### Use espaçamento consistente
-Manter uma consistência no uso de espaços ao redor dos operadores e após as vírgulas contribui para a legibilidade do código.
+### Use consistent spacing
+Maintaining consistency in the use of spaces around operators and after commas contributes to code readability.
 
-**Ruim:**
+**Bad:**
 ```swift
 let sum = 1+2
 let array = [1 , 2,3, 4]
 ```
 
-**Bom:**
+**Good:**
 ```swift
 let sum = 1 + 2
 let array = [1, 2, 3, 4]
 ```
 
-### Evite espaços em branco em excesso
-Espaços em branco em excesso podem poluir visualmente o código e torná-lo menos legível. Mantenha um uso moderado de espaços em branco.
+### Avoid excessive whitespace
+Excessive whitespace can visually clutter the code and make it less readable. Maintain a moderate use of whitespace.
 
-**Ruim:**
+**Bad:**
 ```swift
 func   foo  (   a : Int  , b   :   Int   ) -> Int {
     return a + b
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func foo(a: Int, b: Int) -> Int {
     return a + b
 }
 ```
 
-### Siga a formatação recomendada pela SwiftLint
-A formatação do código pode ser um tópico controverso, mas é importante manter um padrão consistente dentro do seu projeto. O SwiftLint é uma ferramenta útil para impor padrões de formatação. Integre o SwiftLint no seu fluxo de trabalho para garantir que o código siga as práticas recomendadas.
+### Follow the formatting recommended by SwiftLint
+Code formatting can be a controversial topic, but it's important to maintain a consistent standard within your project. SwiftLint is a helpful tool for enforcing formatting standards. Integrate SwiftLint into your workflow to ensure the code follows recommended practices.
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#Index)**
 
-# Comentários
+# Comments
 
-### Apenas comente coisas que tenham complexidade de lógica de negócio.
-Comentários devem ser usados para explicar partes do código que têm uma complexidade não óbvia ou para fornecer informações adicionais sobre a lógica de negócio. Evite comentar o óbvio ou detalhes triviais que podem ser facilmente compreendidos lendo o código.
+### Only comment on things that have business logic complexity.
+Comments should be used to explain parts of the code that have non-obvious complexity or to provide additional information about business logic. Avoid commenting on the obvious or trivial details that can be easily understood by reading the code.
 
-**Ruim:**
+**Bad:**
 ```swift
 func calculateTotalScore(score: Int) {
-  // Inicializa a pontuação total
+  // Initialize the total score
   var totalScore = 0
   
-  // Loop através de cada pontuação individual
+  // Loop through each individual score
   for i in 1...score {
-    // Adiciona a pontuação individual à pontuação total
+    // Add the individual score to the total score
     totalScore += i
   }
   
-  // Imprime a pontuação total
-  print("A pontuação total é: \(totalScore)")
+  // Print the total score
+  print("The total score is: \(totalScore)")
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func calculateTotalScore(score: Int) {
-    // A pontuação total é calculada usando a fórmula de soma de Gauss
+    // The total score is calculated using the Gauss sum formula
     var totalScore = (score * (score + 1)) / 2
     
-    // Imprime a pontuação total
-    print("A pontuação total é: \(totalScore)")
+    // Print the total score
+    print("The total score
+
+ is: \(totalScore)")
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#Index)**
 
-### Não deixe código comentado na sua base de código
-O controle de versão (como o Git) é uma ferramenta poderosa para rastrear alterações ao longo do tempo. Não há necessidade de manter código comentado na base de código, pois ele apenas adiciona ruído e dificulta a leitura.
+### Don't leave commented-out code in your codebase
+Version control (like Git) is a powerful tool for tracking changes over time. There's no need to keep commented-out code in the codebase as it only adds noise and makes it harder to read.
 
-**Ruim:**
+**Bad:**
 ```swift
 func doSomething() {
-    // Código anterior que não é mais necessário
+    // Previous code that is no longer needed
     // ...
     
-    // Código desativado para fins de referência futura
+    // Code commented out for future reference
     /*
     if someCondition {
-        // Código a ser executado
+        // Code to be executed
     }
     */
     
@@ -1800,68 +1793,42 @@ func doSomething() {
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 func doSomething() {
-    // Código atual
+    // Current code
     // ...
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#Index)**
 
-### Não comente registro de alterações
-Evite adicionar comentários de registro de alterações diretamente no código. Use um sistema de controle de versão para rastrear as alterações e forneça registros de alterações no repositório ou em um arquivo específico.
+### Avoid change markers
+Avoid using change markers, such as slashes or lines of asterisks, to divide or highlight sections of code. Instead, use good code structure with proper indentation and formatting to make the code easily understandable.
 
-**Ruim:**
-```swift
-/**
- * 2022-03-15: Removida a lógica de fallback (RM)
- * 2022-01-20: Corrigido bug na validação de entrada (JP)
- * 2021-12-01: Adicionada nova função de processamento (LI)
- */
-func processInput(input: String) {
-  // Lógica de processamento
-}
-```
-
-**Bom:**
-```swift
-func processInput(input: String) {
-  // Lógica de processamento
-}
-```
-
-Registros de alterações podem ser mantidos em um arquivo `CHANGELOG.md` ou similar, ou dentro das mensagens de commit no controle de versão.
-
-**[⬆ voltar ao topo](#Índice)**
-
-### Evite marcadores de posição
-Evite usar marcadores de posição, como barras ou linhas de asteriscos, para dividir ou destacar seções de código. Em vez disso, use uma boa estrutura de código com identação e formatação adequadas para tornar o código facilmente compreensível.
-
-**Ruim:**
+**Bad:**
 ```swift
 struct Example {
-    // MARK: - Propriedades
+    // MARK: - Properties
     var name: String
     var age: Int
     
-    // MARK - Inicializador
+    // MARK - Initializer
     init(name: String, age: Int) {
         self.name = name
         self.age = age
     }
     
-    // MARK - Funções
+    // MARK - Functions
     
-    // Método para realizar uma ação
+    // Method to perform an action
     func performAction() {
         // ...
     }
 }
 ```
 
-**Bom:**
+**Good:**
 ```swift
 struct Example {
     var name: String
@@ -1878,4 +1845,4 @@ struct Example {
 }
 ```
 
-**[⬆ voltar ao topo](#Índice)**
+**[⬆ back to top](#Index)**
