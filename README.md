@@ -1,4 +1,4 @@
-# clean-code-swift
+# Clean Code Adapted for Swift
 
 ## Index
   1. [Introduction](#introduction)
