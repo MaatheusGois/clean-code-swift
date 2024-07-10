@@ -14,7 +14,10 @@
   11. [Comments](#comments)
 
 # Introduction
-![Humorous image of software quality estimation based on counting how many swear words you shouted while reading the code.](http://www.osnews.com/images/comics/wtfm.jpg)
+
+![Humorous image of software quality estimation based on counting how many swear words you shouted while reading the code.](https://github.com/MaatheusGois/clean-code-swift/assets/31082311/33650f3c-7e27-44c1-9dba-4b6b0e359dc3)
+
+
 
 Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/MaatheusGois/3rs-of-software-architecture-for-iOS) in Swift.
 
