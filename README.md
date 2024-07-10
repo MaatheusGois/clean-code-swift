@@ -16,7 +16,7 @@
 # Introduction
 ![Humorous image of software quality estimation based on counting how many swear words you shouted while reading the code.](http://www.osnews.com/images/comics/wtfm.jpg)
 
-Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/ryanmcdermott/3rs-of-software-architecture) in Swift.
+Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/MaatheusGois/3rs-of-software-architecture-for-iOS) in Swift.
 
 It is not necessary to strictly follow all the principles demonstrated, and even less are they a universal consensus. These principles are guidelines and nothing more, however, they have been codified over many years of collective experience by the authors of *Clean Code*.
 
