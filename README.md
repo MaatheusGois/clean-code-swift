@@ -16,7 +16,7 @@
 # Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
 
-Princípios de Engenharia de Software, do livro de Robert C. Martin [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adaptados para Swift. Este não é um guia de estilo. É um guia para produzir código [legível, reutilizável e passível de refatoração](https://github.com/ryanmcdermott/3rs-of-software-architecture) em Swift.
+Princípios de Engenharia de Software, do livro de Robert C. Martin [*Clean Code*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675), adaptados para Swift. Este não é um guia de estilo. É um guia para produzir código [legível, reutilizável e passível de refatoração](https://github.com/MaatheusGois/3rs-of-software-architecture-for-iOS) em Swift.
 
 Não é necessário seguir rigorosamente todos os princípios demonstrados, e ainda menos eles são um consenso universal. Esses princípios são diretrizes e nada mais, contudo, foram codificados ao longo de muitos anos de experiência coletiva pelos autores de *Clean Code*.
 
