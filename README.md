@@ -19,7 +19,7 @@
 
 
 
-Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://www.amazon.com.br/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/MaatheusGois/3rs-of-software-architecture-for-iOS) in Swift.
+Software Engineering principles from Robert C. Martin's book [*Clean Code*](https://github.com/MaatheusGois/clean-code-book/blob/main/The.Robert.C.Martin.Clean.Code.Collection.2011.11.epub), adapted for Swift. This is not a style guide. It is a guide for producing [readable, reusable, and refactorable code](https://github.com/MaatheusGois/3rs-of-software-architecture-for-iOS) in Swift.
 
 It is not necessary to strictly follow all the principles demonstrated, and even less are they a universal consensus. These principles are guidelines and nothing more, however, they have been codified over many years of collective experience by the authors of *Clean Code*.
 
